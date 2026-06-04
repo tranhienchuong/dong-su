@@ -1,46 +1,95 @@
-**Dòng Sử**
+# Dòng Sử
 
-Một web app tương tác nhỏ (Next.js + Tailwind) kể lại những cảnh lịch sử dưới dạng tập/scene có lựa chọn, cùng tư liệu lịch sử.
+Dòng Sử là một web trải nghiệm lịch sử tương tác: người đọc đi qua các scene, đưa ra lựa chọn, theo dõi chỉ số thay đổi và mở lại kho tư liệu để xem timeline, nhân vật, vật phẩm biểu tượng.
 
-**Quick Start**
-- **Yêu cầu:** Node.js (LTS), npm
-- Cài dependencies và chạy dev:
+Đây là project học tập/portfolio, tập trung vào cảm giác cinematic historical và dữ liệu mở rộng được bằng TypeScript.
+
+## Demo Routes
+
+- `/` — episode hub / trang chủ chọn nhân vật và tập truyện
+- `/dong-su/zhu-yuanzhang` — Chu Nguyên Chương: Tập 1, story tương tác 16 scene
+- `/dong-su/zhu-yuanzhang/archive` — kho tư liệu, timeline, gallery nhân vật và vật phẩm
+
+## Tech Stack
+
+- Next.js App Router
+- React
+- TypeScript
+- Tailwind CSS
+
+## Features
+
+- Episode hub cho các tập hiện có và các tập sắp ra mắt
+- Interactive 16-scene story cho Chu Nguyên Chương tập 1
+- Choice-based stats: Dân tâm, Nghĩa khí, Quân uy, Nhân tính, Dã tâm
+- Historical note modal cho từng scene
+- Archive timeline render đủ 16 scene
+- Character gallery render 6 nhân vật
+- Relic gallery render 4 vật phẩm
+- Journey map cho hành trình đầu đời
+- Cinematic CSS thuần với reduced-motion support
+
+## Project Structure
+
+```text
+src/
+  app/
+    layout.tsx
+    page.tsx
+    not-found.tsx
+    dong-su/
+      zhu-yuanzhang/
+        page.tsx
+        archive/
+          page.tsx
+  components/
+    dong-su/
+      CharacterGallery.tsx
+      ChoiceButton.tsx
+      EpisodeCard.tsx
+      EpisodeTimeline.tsx
+      FactCard.tsx
+      JourneyMap.tsx
+      RelicGallery.tsx
+      StatPanel.tsx
+      StoryScene.tsx
+  data/
+    dong-su/
+      episodes.ts
+      zhu-yuanzhang-episode-1.ts
+public/
+  history/
+    zhu-yuanzhang/
+      characters/
+      items/
+      maps/
+      scenes/
+```
+
+## How To Run
 
 ```bash
 npm install
 npm run dev
+npm run build
 ```
 
-**Scripts**
-- `dev`: chạy Next.js ở chế độ phát triển
-- `build`: build sản phẩm
-- `start`: chạy build
-- `lint`: lint dự án
+Lint:
 
-**Project Structure**
-- **Root:** [package.json](package.json), [next.config.ts](next.config.ts), [tsconfig.json](tsconfig.json), [tailwind.config.ts](tailwind.config.ts)
-- **Public (tài nguyên tĩnh):** `public/` chứa ảnh, maps, v.v. Ảnh cho Chu Nguyên Chương được đặt trong `public/history/zhu-yuanzhang/`.
-- **App:** [src/app](src/app) — trang và layout của Next.js (App Router)
-  - [src/app/layout.tsx](src/app/layout.tsx) — Root layout và metadata
-  - [src/app/page.tsx](src/app/page.tsx) — Trang chủ
-  - [src/app/dong-su/zhu-yuanzhang/page.tsx](src/app/dong-su/zhu-yuanzhang/page.tsx) — Trang tập 1: quản lý trạng thái trò chơi, chuyển scene, hiển thị các component
-- **Components:** [src/components/dong-su](src/components/dong-su)
-  - [src/components/dong-su/StoryScene.tsx](src/components/dong-su/StoryScene.tsx) — bố cục cảnh (hình nền, tiêu đề, tông màu)
-  - [src/components/dong-su/ChoiceButton.tsx](src/components/dong-su/ChoiceButton.tsx) — nút lựa chọn và badge chỉ số
-  - [src/components/dong-su/StatPanel.tsx](src/components/dong-su/StatPanel.tsx) — hiển thị các chỉ số
-  - [src/components/dong-su/FactCard.tsx](src/components/dong-su/FactCard.tsx) — modal tư liệu lịch sử
-- **Data:** [src/data/dong-su/zhu-yuanzhang-episode-1.ts](src/data/dong-su/zhu-yuanzhang-episode-1.ts) — tất cả dữ liệu tập 1 (scenes, choices, facts, labels, initialStats, results). Đây là nguồn dữ liệu quan trọng: UI chỉ đọc dữ liệu này.
-
-**Assets & Paths**
-- Ảnh được phục vụ từ `public/` và truy cập trong Next.js bằng đường dẫn bắt đầu `/`. Ví dụ:
-
-```
-/history/zhu-yuanzhang/scenes/01-childhood-field.webp
+```bash
+npm run lint
 ```
 
-**Ghi chú**
-- Dữ liệu cảnh nằm trong `src/data` để dễ mở rộng (thêm episodes, scenes).
-- Giao diện/tương tác chính xử lý trong `src/app/dong-su/zhu-yuanzhang/page.tsx` bằng state React (client component).
-- Nếu muốn thêm episode mới: tạo file dữ liệu tương tự trong `src/data/dong-su/` và trang route mới hoặc tái dùng component.
+## Notes
 
-Nếu muốn, tôi có thể commit file này cho bạn hoặc chạy `npm run dev` để kiểm tra giao diện.
+- Một số tình tiết được kể theo hướng cinematic/symbolic để phục vụ trải nghiệm tương tác, không thay thế tài liệu lịch sử học thuật.
+- Các episode `coming-soon` đang dùng tạm ảnh có sẵn trong thư mục Chu Nguyên Chương để tránh thiếu asset.
+- Ảnh được phục vụ từ `public/` bằng path bắt đầu với `/`, ví dụ:
+
+```text
+/history/zhu-yuanzhang/scenes/16-zhu-yuanzhang-dawn.webp
+```
+
+## Deployment
+
+Project build bằng `npm run build` và có thể deploy như một ứng dụng Next.js tiêu chuẩn. Không cần backend, database hoặc login cho bản demo hiện tại.

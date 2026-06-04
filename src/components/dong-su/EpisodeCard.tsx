@@ -76,7 +76,7 @@ export function EpisodeCard({ episode }: EpisodeCardProps) {
   }
 
   return (
-    <article aria-disabled="true" className={`${cardClassName} opacity-80`}>
+    <article className={`${cardClassName} opacity-80`}>
       <EpisodeCardContent episode={episode} />
     </article>
   );

@@ -3,7 +3,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Dòng Sử",
-  description: "A historical interactive story web app.",
+  description:
+    "Web trải nghiệm lịch sử tương tác với scene, lựa chọn, timeline và tư liệu.",
   icons: {
     icon: "/favicon.svg",
   },

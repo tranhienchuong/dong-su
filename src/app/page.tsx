@@ -2,10 +2,6 @@ import Link from "next/link";
 import { EpisodeCard } from "@/components/dong-su/EpisodeCard";
 import { episodes } from "@/data/dong-su/episodes";
 
-const featuredEpisode = episodes.find(
-  (episode) => episode.id === "zhu-yuanzhang-episode-1",
-);
-
 const statNames = ["Dân tâm", "Nghĩa khí", "Quân uy", "Nhân tính", "Dã tâm"];
 
 const experienceSteps = [
