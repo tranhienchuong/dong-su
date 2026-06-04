@@ -148,7 +148,7 @@ export default function ZhuYuanzhangEpisodePage() {
     <main className="relative min-h-screen overflow-hidden bg-ink text-parchment">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-35"
+        className="dong-su-bg-drift pointer-events-none absolute inset-0 opacity-35"
         style={{
           backgroundImage: `linear-gradient(180deg, rgba(9,6,4,0.35), rgba(9,6,4,0.96)), url(${backdropImage})`,
           backgroundPosition: "center",
@@ -159,22 +159,32 @@ export default function ZhuYuanzhangEpisodePage() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(9,6,4,0.9),rgba(21,16,12,0.44),rgba(9,6,4,0.9))]"
       />
+      <div
+        aria-hidden="true"
+        className="dong-su-vignette pointer-events-none absolute inset-0"
+      />
+      <div
+        aria-hidden="true"
+        className="dong-su-dust pointer-events-none absolute inset-0"
+      />
 
       <div className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-5 sm:px-6 lg:px-8">
-        <header className="mb-5 border-b border-old-gold/25 pb-5">
-          <p className="text-sm text-old-gold">Dòng Sử</p>
+        <header className="mb-5 rounded-md border border-old-gold/20 bg-black/25 px-4 py-4 backdrop-blur-sm sm:px-5">
+          <p className="text-xs uppercase tracking-[0.22em] text-old-gold">
+            Dòng Sử
+          </p>
           <div className="mt-2 flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
             <div className="max-w-3xl">
-              <h1 className="font-serif text-3xl leading-tight text-faded-gold sm:text-5xl">
+              <h1 className="dong-su-text-shadow font-serif text-3xl leading-tight text-faded-gold sm:text-5xl">
                 {episode.title}
               </h1>
               <p className="mt-2 text-lg text-old-gold">{episode.subtitle}</p>
-              <p className="mt-3 max-w-2xl leading-7 text-stone-300">
+              <p className="mt-3 max-w-2xl text-sm leading-7 text-stone-300 sm:text-base">
                 {episode.framing}
               </p>
             </div>
             <button
-              className="inline-flex min-h-11 w-full items-center justify-center border border-old-gold/45 bg-black/35 px-4 py-2 text-faded-gold transition hover:border-faded-gold hover:bg-umber focus:outline-none focus:ring-2 focus:ring-faded-gold/70 sm:w-auto"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-old-gold/45 bg-black/35 px-4 py-2 text-faded-gold transition hover:-translate-y-0.5 hover:border-faded-gold hover:bg-umber focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80 sm:w-auto"
               onClick={handleRestart}
               type="button"
             >
@@ -184,28 +194,37 @@ export default function ZhuYuanzhangEpisodePage() {
         </header>
 
         {!hasStarted ? (
-          <section className="grid flex-1 overflow-hidden border border-old-gold/35 bg-charcoal/90 shadow-ember lg:grid-cols-[minmax(0,1.1fr)_minmax(20rem,0.9fr)]">
-            <div className="relative min-h-[22rem] lg:min-h-[34rem]">
+          <section className="dong-su-panel dong-su-fade-in grid flex-1 overflow-hidden rounded-md lg:grid-cols-[minmax(0,1.1fr)_minmax(20rem,0.9fr)]">
+            <div className="relative min-h-[22rem] overflow-hidden lg:min-h-[34rem]">
               <img
                 alt="Bản đồ hành trình đầu đời của Chu Nguyên Chương"
-                className="absolute inset-0 size-full object-cover"
+                className="absolute inset-0 size-full scale-110 object-cover object-[30%_center]"
                 src={episode.mapImage}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-black/35 to-black/95" />
+              <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-r from-transparent via-black/70 to-black" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+              <div className="absolute inset-0 dong-su-vignette" />
+              <div className="absolute inset-0 dong-su-dust" />
             </div>
 
-            <div className="flex flex-col justify-center p-5 sm:p-8">
-              <p className="text-sm text-old-gold">Bản đồ đầu tập</p>
-              <h2 className="mt-2 font-serif text-4xl leading-tight text-faded-gold sm:text-5xl">
-                {episode.description}
+            <div className="relative z-10 flex flex-col justify-center border-t border-old-gold/20 bg-black/80 p-5 shadow-[inset_24px_0_60px_rgba(0,0,0,0.45)] sm:p-8 lg:border-l lg:border-t-0 lg:bg-charcoal/95">
+              <p className="text-sm uppercase tracking-[0.22em] text-old-gold">
+                Bản đồ đầu tập
+              </p>
+              <h2 className="dong-su-text-shadow mt-3 font-serif text-3xl leading-tight text-faded-gold sm:text-5xl">
+                {episode.subtitle}
               </h2>
-              <p className="mt-5 leading-8 text-stone-300">
+              <p className="mt-4 max-w-2xl leading-8 text-stone-300">
+                {episode.description}
+              </p>
+              <p className="mt-4 max-w-2xl leading-8 text-stone-300">
                 Theo dấu Chu Trùng Bát từ ruộng nghèo, cửa chùa, đường phiêu
                 bạt đến doanh trại Hồng Cân. Mỗi lựa chọn sẽ bồi đắp năm chỉ số
                 của tập này.
               </p>
               <button
-                className="mt-7 inline-flex min-h-12 w-full items-center justify-center border border-old-gold/45 bg-umber px-5 py-3 text-parchment transition hover:border-faded-gold hover:bg-oxblood focus:outline-none focus:ring-2 focus:ring-faded-gold/70 sm:w-auto"
+                className="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-sm border border-old-gold/45 bg-umber px-5 py-3 text-parchment transition hover:-translate-y-0.5 hover:border-faded-gold hover:bg-oxblood focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80 sm:w-auto"
                 onClick={handleStart}
                 type="button"
               >
@@ -217,15 +236,23 @@ export default function ZhuYuanzhangEpisodePage() {
           <div className="grid flex-1 gap-5 lg:grid-cols-[minmax(0,1fr)_18rem]">
             <div>
               {isEnded ? (
-                <section className="border border-old-gold/35 bg-charcoal/90 p-6 shadow-ember sm:p-8">
+                <section className="dong-su-panel dong-su-fade-in rounded-md p-6 sm:p-8">
                   {resultText ? (
-                    <div className="mb-6 border-l-4 border-faded-gold bg-black/35 px-4 py-3 text-stone-200">
+                    <div className="mb-6 rounded-sm border-l-4 border-faded-gold bg-black/35 px-4 py-3 text-stone-200">
                       {resultText}
                     </div>
                   ) : null}
 
-                  <p className="text-sm text-old-gold">Kết cục tập 1</p>
-                  <h2 className="mt-2 font-serif text-4xl leading-tight text-faded-gold sm:text-6xl">
+                  <p className="text-sm uppercase tracking-[0.22em] text-old-gold">
+                    Kết cục tập 1
+                  </p>
+                  <div className="mt-5 border-l-4 border-old-gold/55 bg-black/25 px-4 py-4 font-serif text-2xl leading-9 text-parchment sm:text-3xl sm:leading-10">
+                    <p>Chu Trùng Bát đã chết.</p>
+                    <p className="mt-2 text-faded-gold">
+                      Từ hôm nay, ta là Chu Nguyên Chương.
+                    </p>
+                  </div>
+                  <h2 className="dong-su-text-shadow mt-7 font-serif text-4xl leading-tight text-faded-gold sm:text-6xl">
                     {ending.title}
                   </h2>
                   <p className="mt-5 max-w-3xl font-serif text-xl leading-9 text-parchment">
@@ -233,7 +260,7 @@ export default function ZhuYuanzhangEpisodePage() {
                   </p>
                   <div className="mt-7 flex flex-wrap gap-3">
                     <button
-                      className="inline-flex min-h-11 items-center justify-center border border-old-gold/45 bg-umber px-4 py-2 text-parchment transition hover:border-faded-gold hover:bg-oxblood focus:outline-none focus:ring-2 focus:ring-faded-gold/70"
+                      className="inline-flex min-h-11 items-center justify-center rounded-sm border border-old-gold/45 bg-umber px-4 py-2 text-parchment transition hover:-translate-y-0.5 hover:border-faded-gold hover:bg-oxblood focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80"
                       onClick={handleRestart}
                       type="button"
                     >
@@ -241,7 +268,7 @@ export default function ZhuYuanzhangEpisodePage() {
                     </button>
                     {currentScene.historicalNote ? (
                       <button
-                        className="inline-flex min-h-11 items-center justify-center border border-old-gold/35 bg-black/35 px-4 py-2 text-faded-gold transition hover:border-faded-gold hover:bg-umber focus:outline-none focus:ring-2 focus:ring-faded-gold/70"
+                        className="inline-flex min-h-11 items-center justify-center rounded-sm border border-old-gold/35 bg-black/35 px-4 py-2 text-faded-gold transition hover:-translate-y-0.5 hover:border-faded-gold hover:bg-umber focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80"
                         onClick={() => setShowFact(true)}
                         type="button"
                       >
@@ -270,14 +297,14 @@ export default function ZhuYuanzhangEpisodePage() {
                   ))}
 
                   {resultText ? (
-                    <div className="border-l-4 border-faded-gold bg-black/35 px-4 py-3 text-stone-200">
+                    <div className="dong-su-fade-in rounded-sm border-l-4 border-faded-gold bg-black/35 px-4 py-3 text-stone-200">
                       {resultText}
                     </div>
                   ) : null}
 
                   {selectedChoice ? (
                     <button
-                      className="inline-flex min-h-12 items-center justify-center border border-old-gold/45 bg-umber px-5 py-3 text-parchment transition hover:border-faded-gold hover:bg-oxblood focus:outline-none focus:ring-2 focus:ring-faded-gold/70"
+                      className="dong-su-fade-in inline-flex min-h-12 items-center justify-center rounded-sm border border-old-gold/45 bg-umber px-5 py-3 text-parchment transition hover:-translate-y-0.5 hover:border-faded-gold hover:bg-oxblood focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80"
                       onClick={handleContinue}
                       type="button"
                     >

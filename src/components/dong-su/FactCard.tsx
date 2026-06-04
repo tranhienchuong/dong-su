@@ -39,22 +39,22 @@ export function FactCard({
     <div
       aria-labelledby="fact-card-title"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm"
+      className="dong-su-fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-3 backdrop-blur-md sm:p-4"
       role="dialog"
     >
       <button
         aria-label="Đóng tư liệu"
-        className="absolute inset-0 cursor-default"
+        className="absolute inset-0 cursor-default focus:outline-none"
         onClick={onClose}
         type="button"
       />
 
-      <section className="relative max-h-[86vh] w-full max-w-2xl overflow-y-auto border border-old-gold/45 bg-[#17100b] p-5 text-parchment shadow-ember sm:p-6">
+      <section className="dong-su-panel relative max-h-[84vh] w-full max-w-2xl overflow-y-auto rounded-md p-5 text-parchment sm:max-h-[86vh] sm:p-6">
         <div className="flex items-start justify-between gap-4 border-b border-old-gold/25 pb-4">
           <div>
-          <p className="text-sm text-old-gold">Ghi chú lịch sử</p>
+            <p className="text-sm text-old-gold">Ghi chú lịch sử</p>
             <h2
-              className="mt-1 font-serif text-2xl leading-tight text-faded-gold"
+              className="dong-su-text-shadow mt-1 font-serif text-2xl leading-tight text-faded-gold"
               id="fact-card-title"
             >
               {sceneTitle}
@@ -63,7 +63,7 @@ export function FactCard({
 
           <button
             aria-label="Đóng"
-            className="flex size-9 shrink-0 items-center justify-center border border-old-gold/40 text-faded-gold transition hover:border-faded-gold hover:bg-umber focus:outline-none focus:ring-2 focus:ring-faded-gold/70"
+            className="flex size-9 shrink-0 items-center justify-center rounded-sm border border-old-gold/40 bg-black/25 text-faded-gold transition hover:border-faded-gold hover:bg-umber focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80"
             onClick={onClose}
             title="Đóng"
             type="button"

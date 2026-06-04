@@ -29,3 +29,80 @@ button,
 a {
   -webkit-tap-highlight-color: transparent;
 }
+
+.dong-su-bg-drift {
+  animation: dong-su-bg-drift 22s ease-in-out infinite alternate;
+  transform: scale(1.035);
+  transform-origin: center;
+  will-change: transform;
+}
+
+.dong-su-vignette {
+  background:
+    radial-gradient(ellipse at center, transparent 34%, rgba(0, 0, 0, 0.42) 72%, rgba(0, 0, 0, 0.78) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(8, 5, 3, 0.52) 58%, rgba(8, 5, 3, 0.9));
+}
+
+.dong-su-dust {
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(214, 173, 96, 0.1) 0 1px, transparent 2px),
+    radial-gradient(circle at 72% 38%, rgba(245, 234, 209, 0.08) 0 1px, transparent 2px),
+    radial-gradient(circle at 46% 76%, rgba(185, 144, 66, 0.08) 0 1px, transparent 2px);
+  background-size: 13rem 13rem, 17rem 17rem, 19rem 19rem;
+  opacity: 0.38;
+}
+
+.dong-su-panel {
+  border: 1px solid rgba(185, 144, 66, 0.34);
+  background:
+    linear-gradient(135deg, rgba(9, 6, 4, 0.78), rgba(21, 16, 12, 0.92)),
+    radial-gradient(circle at 20% 0%, rgba(214, 173, 96, 0.1), transparent 24rem);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.42),
+    0 0 42px rgba(182, 113, 43, 0.16);
+  backdrop-filter: blur(10px);
+}
+
+.dong-su-fade-in {
+  animation: dong-su-fade-in 180ms ease-out both;
+}
+
+.dong-su-text-shadow {
+  text-shadow:
+    0 2px 18px rgba(0, 0, 0, 0.72),
+    0 0 24px rgba(91, 44, 18, 0.38);
+}
+
+@keyframes dong-su-bg-drift {
+  from {
+    transform: scale(1.035) translate3d(-0.4%, -0.2%, 0);
+  }
+
+  to {
+    transform: scale(1.08) translate3d(0.6%, 0.4%, 0);
+  }
+}
+
+@keyframes dong-su-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dong-su-bg-drift,
+  .dong-su-fade-in {
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+  }
+
+  .dong-su-bg-drift {
+    transform: none;
+  }
+}
