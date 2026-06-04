@@ -109,12 +109,20 @@ export default function HomePage() {
                 src="/history/zhu-yuanzhang/scenes/16-zhu-yuanzhang-dawn.webp"
               />
             </div>
-            <Link
-              className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-old-gold/45 bg-umber px-4 py-2 text-parchment transition hover:border-faded-gold hover:bg-oxblood focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80"
-              href="/dong-su/zhu-yuanzhang"
-            >
-              Vào tập truyện
-            </Link>
+            <div className="mt-5 grid gap-3">
+              <Link
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-old-gold/45 bg-umber px-4 py-2 text-parchment transition hover:border-faded-gold hover:bg-oxblood focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80"
+                href="/dong-su/zhu-yuanzhang"
+              >
+                Vào tập truyện
+              </Link>
+              <Link
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-old-gold/35 bg-black/35 px-4 py-2 text-faded-gold transition hover:border-faded-gold hover:bg-umber focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80"
+                href="/dong-su/zhu-yuanzhang/archive"
+              >
+                Xem kho tư liệu
+              </Link>
+            </div>
           </aside>
         </section>
 

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { ChoiceButton } from "@/components/dong-su/ChoiceButton";
 import { FactCard } from "@/components/dong-su/FactCard";
@@ -183,13 +184,21 @@ export default function ZhuYuanzhangEpisodePage() {
                 {episode.framing}
               </p>
             </div>
-            <button
-              className="inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-old-gold/45 bg-black/35 px-4 py-2 text-faded-gold transition hover:-translate-y-0.5 hover:border-faded-gold hover:bg-umber focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80 sm:w-auto"
-              onClick={handleRestart}
-              type="button"
-            >
-              Chơi lại
-            </button>
+            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+              <Link
+                className="inline-flex min-h-11 items-center justify-center rounded-sm border border-old-gold/35 bg-black/35 px-4 py-2 text-faded-gold transition hover:-translate-y-0.5 hover:border-faded-gold hover:bg-umber focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80"
+                href="/dong-su/zhu-yuanzhang/archive"
+              >
+                Kho tư liệu
+              </Link>
+              <button
+                className="inline-flex min-h-11 items-center justify-center rounded-sm border border-old-gold/45 bg-black/35 px-4 py-2 text-faded-gold transition hover:-translate-y-0.5 hover:border-faded-gold hover:bg-umber focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80"
+                onClick={handleRestart}
+                type="button"
+              >
+                Chơi lại
+              </button>
+            </div>
           </div>
         </header>
 
