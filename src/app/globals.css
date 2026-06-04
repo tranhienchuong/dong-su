@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --font-serif: "Times New Roman";
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: #090604;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background:
+    radial-gradient(circle at 50% -20%, rgba(185, 144, 66, 0.16), transparent 34rem),
+    linear-gradient(135deg, #090604 0%, #15100c 46%, #2a1711 100%);
+  color: #f5ead1;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
