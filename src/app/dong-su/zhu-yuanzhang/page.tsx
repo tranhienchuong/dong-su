@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChoiceButton } from "@/components/dong-su/ChoiceButton";
 import { FactCard } from "@/components/dong-su/FactCard";
+import { SceneAudioControl } from "@/components/dong-su/SceneAudioControl";
 import { StatPanel } from "@/components/dong-su/StatPanel";
 import { StoryScene } from "@/components/dong-su/StoryScene";
 import {
@@ -17,6 +18,8 @@ import {
 } from "@/data/dong-su/zhu-yuanzhang-episode-1";
 
 const episode = zhuYuanzhangEpisodeOne;
+const SAVE_KEY = "dong-su:zhu-yuanzhang:episode-1:progress";
+const SAVE_VERSION = 1;
 
 const statOrder: StatKey[] = [
   "danTam",
@@ -25,6 +28,78 @@ const statOrder: StatKey[] = [
   "nhanTinh",
   "daTam",
 ];
+
+type SavedProgress = {
+  version: number;
+  currentSceneIndex: number;
+  stats: Stats;
+  selectedChoiceId: string | null;
+  resultText: string | null;
+  isEnded: boolean;
+  hasStarted: boolean;
+  savedAt: string;
+};
+
+function isValidStats(value: unknown): value is Stats {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const stats = value as Record<StatKey, unknown>;
+
+  return statOrder.every((stat) => typeof stats[stat] === "number");
+}
+
+function parseSavedProgress(raw: string | null): SavedProgress | null {
+  if (!raw) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as Partial<SavedProgress>;
+
+    if (
+      parsed.version !== SAVE_VERSION ||
+      typeof parsed.currentSceneIndex !== "number" ||
+      parsed.currentSceneIndex < 0 ||
+      parsed.currentSceneIndex >= episode.scenes.length ||
+      !isValidStats(parsed.stats) ||
+      !(
+        typeof parsed.selectedChoiceId === "string" ||
+        parsed.selectedChoiceId === null
+      ) ||
+      !(typeof parsed.resultText === "string" || parsed.resultText === null) ||
+      typeof parsed.isEnded !== "boolean" ||
+      typeof parsed.hasStarted !== "boolean" ||
+      typeof parsed.savedAt !== "string"
+    ) {
+      return null;
+    }
+
+    return {
+      version: parsed.version,
+      currentSceneIndex: parsed.currentSceneIndex,
+      stats: parsed.stats,
+      selectedChoiceId: parsed.selectedChoiceId,
+      resultText: parsed.resultText,
+      isEnded: parsed.isEnded,
+      hasStarted: parsed.hasStarted,
+      savedAt: parsed.savedAt,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function formatSavedAt(savedAt: string): string | null {
+  const savedAtDate = new Date(savedAt);
+
+  if (Number.isNaN(savedAtDate.getTime())) {
+    return null;
+  }
+
+  return savedAtDate.toLocaleString();
+}
 
 function applyStatChanges(stats: Stats, choice: StoryChoice): Stats {
   return statOrder.reduce<Stats>(
@@ -67,6 +142,11 @@ export default function ZhuYuanzhangEpisodePage() {
   const [isEnded, setIsEnded] = useState(false);
   const [showFact, setShowFact] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+  const [saveLoaded, setSaveLoaded] = useState(false);
+  const [savedProgress, setSavedProgress] = useState<SavedProgress | null>(
+    null,
+  );
 
   const currentScene = episode.scenes[currentSceneIndex] ?? episode.scenes[0];
   const ending = useMemo(() => getEndingForStats(stats), [stats]);
@@ -91,6 +171,94 @@ export default function ZhuYuanzhangEpisodePage() {
         .filter((relic): relic is Relic => Boolean(relic)),
     [currentScene.itemIds],
   );
+  const savedAtLabel = useMemo(
+    () => (savedProgress ? formatSavedAt(savedProgress.savedAt) : null),
+    [savedProgress],
+  );
+
+  useEffect(() => {
+    setHasMounted(true);
+
+    try {
+      const parsed = parseSavedProgress(
+        window.localStorage.getItem(SAVE_KEY),
+      );
+      setSavedProgress(parsed);
+    } catch {
+      setSavedProgress(null);
+    } finally {
+      setSaveLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!hasMounted || !saveLoaded) {
+      return;
+    }
+
+    if (!hasStarted && !isEnded) {
+      return;
+    }
+
+    const progress: SavedProgress = {
+      version: SAVE_VERSION,
+      currentSceneIndex,
+      stats,
+      selectedChoiceId: selectedChoice?.id ?? null,
+      resultText,
+      isEnded,
+      hasStarted,
+      savedAt: new Date().toISOString(),
+    };
+
+    try {
+      window.localStorage.setItem(SAVE_KEY, JSON.stringify(progress));
+      setSavedProgress(progress);
+    } catch {
+      // Keep the story playable if localStorage is unavailable.
+    }
+  }, [
+    currentSceneIndex,
+    hasMounted,
+    hasStarted,
+    isEnded,
+    resultText,
+    saveLoaded,
+    selectedChoice,
+    stats,
+  ]);
+
+  const clearSavedProgress = () => {
+    try {
+      window.localStorage.removeItem(SAVE_KEY);
+    } catch {
+      // Ignore localStorage failures; clearing UI state is still useful.
+    }
+
+    setSavedProgress(null);
+  };
+
+  const handleContinueSavedProgress = () => {
+    if (!savedProgress) {
+      return;
+    }
+
+    const savedScene =
+      episode.scenes[savedProgress.currentSceneIndex] ?? episode.scenes[0];
+    const restoredChoice = savedProgress.selectedChoiceId
+      ? (savedScene.choices.find(
+          (choice) => choice.id === savedProgress.selectedChoiceId,
+        ) ?? null)
+      : null;
+
+    setCurrentSceneIndex(savedProgress.currentSceneIndex);
+    setStats({ ...savedProgress.stats });
+    setSelectedChoice(restoredChoice);
+    setResultText(savedProgress.resultText);
+    setIsEnded(savedProgress.isEnded);
+    setHasStarted(savedProgress.hasStarted);
+    setShowFact(false);
+  };
 
   const handleStart = () => {
     setHasStarted(true);
@@ -136,6 +304,7 @@ export default function ZhuYuanzhangEpisodePage() {
   };
 
   const handleRestart = () => {
+    clearSavedProgress();
     setCurrentSceneIndex(0);
     setStats({ ...episode.initialStats });
     setSelectedChoice(null);
@@ -239,6 +408,38 @@ export default function ZhuYuanzhangEpisodePage() {
               >
                 Bắt đầu
               </button>
+              {hasMounted && saveLoaded && savedProgress ? (
+                <div className="mt-5 rounded-sm border border-old-gold/30 bg-black/35 p-4">
+                  <p className="text-sm font-medium text-old-gold">
+                    Tiến trình đã lưu
+                  </p>
+                  <p className="mt-1 text-sm leading-6 text-stone-300">
+                    Bạn đang ở cảnh {savedProgress.currentSceneIndex + 1}/
+                    {episode.scenes.length}.
+                  </p>
+                  {savedAtLabel ? (
+                    <p className="mt-1 text-xs leading-5 text-stone-400">
+                      Lưu lúc {savedAtLabel}
+                    </p>
+                  ) : null}
+                  <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+                    <button
+                      className="inline-flex min-h-11 items-center justify-center rounded-sm border border-old-gold/45 bg-umber px-4 py-2 text-parchment transition hover:-translate-y-0.5 hover:border-faded-gold hover:bg-oxblood focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80"
+                      onClick={handleContinueSavedProgress}
+                      type="button"
+                    >
+                      Tiếp tục hành trình
+                    </button>
+                    <button
+                      className="inline-flex min-h-11 items-center justify-center rounded-sm border border-old-gold/35 bg-black/35 px-4 py-2 text-faded-gold transition hover:-translate-y-0.5 hover:border-faded-gold hover:bg-umber focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80"
+                      onClick={clearSavedProgress}
+                      type="button"
+                    >
+                      Xóa tiến trình
+                    </button>
+                  </div>
+                </div>
+              ) : null}
             </div>
           </section>
         ) : (
@@ -334,6 +535,10 @@ export default function ZhuYuanzhangEpisodePage() {
         isOpen={showFact}
         onClose={() => setShowFact(false)}
         sceneTitle={currentScene.title}
+      />
+      <SceneAudioControl
+        currentChapter={currentScene.chapter}
+        isActive={hasStarted}
       />
     </main>
   );
