@@ -6,6 +6,7 @@ import {
   getChoiceHint,
   getEpisodeOutcome,
   resolveChoiceResultText,
+  resolveSceneText,
 } from "@/lib/dong-su/game";
 import {
   formatSavedAt,
@@ -54,6 +55,13 @@ export function useEpisodeProgress({
   const outcome = useMemo(
     () => getEpisodeOutcome(episode, stats, memory),
     [episode, memory, stats],
+  );
+  const displayScene = useMemo(
+    () => ({
+      ...currentScene,
+      text: resolveSceneText(currentScene, outcome.personaKey),
+    }),
+    [currentScene, outcome.personaKey],
   );
   const currentCharacters = useMemo<Character[]>(
     () =>
@@ -238,7 +246,7 @@ export function useEpisodeProgress({
     clearSavedProgress,
     currentCharacters,
     currentRelics,
-    currentScene,
+    currentScene: displayScene,
     currentSceneIndex,
     ending: outcome.ending,
     endingKey: outcome.endingKey,

@@ -10,6 +10,7 @@ import type {
   StatKey,
   Stats,
   StoryChoice,
+  StorySceneData,
 } from "@/types/dong-su";
 
 export const statOrder: StatKey[] = [
@@ -123,6 +124,13 @@ export function getChoiceHint(
   const { hintText, ...condition } = choice.softRequirement;
 
   return meetsCondition(condition, stats, memory) ? null : hintText;
+}
+
+export function resolveSceneText(
+  scene: StorySceneData,
+  personaKey: PersonaKey,
+): string[] {
+  return scene.textVariants?.[personaKey] ?? scene.text;
 }
 
 function getMemoryPersona(stats: Stats, memory: MemoryFlag[]): PersonaKey | null {

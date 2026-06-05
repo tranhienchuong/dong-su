@@ -185,6 +185,20 @@ export const scenes = [
       "Gió đồng thổi qua những vạt lúa thưa. Chu Trùng Bát cùng đám trẻ nghèo lấy đất làm điện, lấy que khô làm ấn.",
       "Cậu ngồi giữa vòng bạn, nói rằng hoàng đế trước hết phải khiến huynh đệ được ăn no. Tiếng cười trẻ con vang lên, nhưng trong bụng ai cũng rỗng.",
     ],
+    textVariants: {
+      "iron-ruler": [
+        "Gió đồng thổi qua những vạt lúa thưa. Chu Trùng Bát nhìn đám trẻ nghèo dựng điện bằng đất, rồi học rất sớm rằng kẻ ngồi giữa vòng người sẽ được lắng nghe.",
+        "Cậu nói hoàng đế trước hết phải khiến huynh đệ được ăn no. Trong tiếng cười trẻ con, một ý nghĩ cứng hơn trò chơi bắt đầu thành hình.",
+      ],
+      "people-hearted": [
+        "Gió đồng thổi qua những vạt lúa thưa. Chu Trùng Bát cùng đám trẻ nghèo lấy đất làm điện, lấy que khô làm ấn, nhưng mắt cậu vẫn nhìn về những cái bụng rỗng quanh mình.",
+        "Cậu nói hoàng đế trước hết phải khiến huynh đệ được ăn no. Tiếng cười vang lên, mỏng và sáng, như một bữa cơm tưởng tượng giữa ngày đói.",
+      ],
+      "brotherhood-leader": [
+        "Gió đồng thổi qua những vạt lúa thưa. Chu Trùng Bát ngồi giữa đám bạn, không giống một đứa trẻ muốn làm vua, mà giống người được cả bọn tự nhiên quay sang chờ.",
+        "Cậu nói hoàng đế trước hết phải khiến huynh đệ được ăn no. Lời ấy còn non, nhưng đám trẻ nghe như một lời hẹn sẽ có người đứng cùng mình.",
+      ],
+    },
     choices: [
       {
         id: "feed-brothers",
@@ -569,6 +583,20 @@ export const scenes = [
       "Hiểm nguy đuổi sát sau lưng người áo nâu. Khi mọi ngả đường đều có lính, Mã Tú Anh nhận ra người từng tụng kinh giữa pháp trường.",
       "Nàng kéo ông qua một cánh cửa hẹp, giọng thấp mà dứt khoát. Một mạng người được giữ lại bằng lòng can đảm lặng thầm.",
     ],
+    textVariants: {
+      "iron-ruler": [
+        "Hiểm nguy đuổi sát sau lưng người áo nâu. Khi mọi ngả đường đều có lính, Mã Tú Anh nhận ra trong mắt ông không chỉ có sợ hãi, mà còn có một thứ lạnh dần thành ý chí.",
+        "Nàng kéo ông qua một cánh cửa hẹp, giọng thấp mà dứt khoát. Được cứu sống, ông hiểu thêm rằng ân tình cũng có thể trở thành món nợ phải trả bằng quyền lực.",
+      ],
+      "people-hearted": [
+        "Hiểm nguy đuổi sát sau lưng người áo nâu. Khi mọi ngả đường đều có lính, Mã Tú Anh nhận ra người từng giữ lại một chút phẩm giá cho kẻ chết giữa pháp trường.",
+        "Nàng kéo ông qua một cánh cửa hẹp, giọng thấp mà dứt khoát. Trong khoảnh khắc ấy, Chu Trùng Bát thấy thời loạn vẫn còn có người chìa tay trước khi hỏi lợi hại.",
+      ],
+      "brotherhood-leader": [
+        "Hiểm nguy đuổi sát sau lưng người áo nâu. Khi mọi ngả đường đều có lính, Mã Tú Anh nhận ra kẻ đã từng đứng giữa đám đông và khiến người khác muốn đứng thẳng theo.",
+        "Nàng kéo ông qua một cánh cửa hẹp, giọng thấp mà dứt khoát. Một mạng người được giữ lại, và từ đó ông hiểu nghĩa khí không chỉ nằm trong tiếng hô của đàn ông ngoài trận.",
+      ],
+    },
     choices: [
       {
         id: "thank-and-leave",
@@ -846,6 +874,20 @@ export const scenes = [
       "Trống trận dội qua đồng trống, cờ Hồng Cân chao trong gió bụi. Một cánh quân bạn bị bỏ lại sau làn khói hỗn loạn.",
       "Lệnh trên bắt đứng yên, nhưng tiếng kêu cứu đã đến quá gần. Chu Trùng Bát thấy rõ khoảnh khắc một người lính thường có thể thành người dẫn đầu.",
     ],
+    textVariants: {
+      "iron-ruler": [
+        "Trống trận dội qua đồng trống, cờ Hồng Cân chao trong gió bụi. Một cánh quân bạn bị bỏ lại sau làn khói, còn hàng ngũ trước mặt ông chờ một mệnh lệnh rõ hơn tiếng sợ hãi.",
+        "Lệnh trên bắt đứng yên, nhưng tiếng kêu cứu đã đến quá gần. Chu Trùng Bát thấy quyền chỉ huy không rơi vào tay người mềm lòng nhất, mà vào tay kẻ dám chịu hậu quả sau tiếng hô.",
+      ],
+      "people-hearted": [
+        "Trống trận dội qua đồng trống, cờ Hồng Cân chao trong gió bụi. Một cánh quân bạn bị bỏ lại sau làn khói, và mỗi tiếng kêu cứu giống một người nghèo bị bỏ lại bên đường.",
+        "Lệnh trên bắt đứng yên, nhưng tiếng kêu đã đến quá gần. Chu Trùng Bát hiểu nếu quân lệnh làm người ta quên mạng người trước mắt, lòng quân cũng sẽ lạnh theo.",
+      ],
+      "brotherhood-leader": [
+        "Trống trận dội qua đồng trống, cờ Hồng Cân chao trong gió bụi. Một cánh quân bạn bị bỏ lại sau làn khói, nhưng tiếng gọi của họ vẫn tìm được đường về phía huynh đệ.",
+        "Lệnh trên bắt đứng yên, nhưng tiếng kêu cứu đã đến quá gần. Chu Trùng Bát thấy rõ khoảnh khắc một người lính thường có thể kéo cả hàng quân đi cùng mình.",
+      ],
+    },
     choices: [
       {
         id: "obey-and-hold",
@@ -1040,6 +1082,20 @@ export const scenes = [
       "Bình minh lên sau dãy lều quân, phủ ánh vàng nhạt lên tấm giáp đầu tiên. Chu Trùng Bát không còn là đứa trẻ đói khát đứng giữa ruộng nghèo.",
       "Từ hôm nay, ông bước vào đời với cái tên Chu Nguyên Chương. Phía trước là quân lệnh, huynh đệ, ân tình và một thiên hạ đang rạn nứt.",
     ],
+    textVariants: {
+      "iron-ruler": [
+        "Bình minh lên sau dãy lều quân, phủ ánh vàng nhạt lên tấm giáp đầu tiên. Chu Trùng Bát không còn là đứa trẻ đói khát đứng giữa ruộng nghèo, mà là người đã học cách biến sợ hãi thành trật tự.",
+        "Từ hôm nay, ông bước vào đời với cái tên Chu Nguyên Chương. Phía trước là quân lệnh, huynh đệ, ân tình và một thiên hạ chỉ cúi đầu trước kẻ đủ cứng để nắm lấy nó.",
+      ],
+      "people-hearted": [
+        "Bình minh lên sau dãy lều quân, phủ ánh vàng nhạt lên tấm giáp đầu tiên. Chu Trùng Bát không còn là đứa trẻ đói khát, nhưng trong ông vẫn còn tiếng bếp lạnh và những người nghèo không ai chôn cất.",
+        "Từ hôm nay, ông bước vào đời với cái tên Chu Nguyên Chương. Phía trước là quân lệnh, huynh đệ, ân tình và một thiên hạ rạn nứt cần được nhìn bằng mắt của dân đói.",
+      ],
+      "brotherhood-leader": [
+        "Bình minh lên sau dãy lều quân, phủ ánh vàng nhạt lên tấm giáp đầu tiên. Chu Trùng Bát không còn đứng một mình giữa ruộng nghèo, vì sau lưng ông đã có những người biết gọi nhau là huynh đệ.",
+        "Từ hôm nay, ông bước vào đời với cái tên Chu Nguyên Chương. Phía trước là quân lệnh, ân tình và một thiên hạ rạn nứt, nơi người dẫn đầu phải khiến kẻ khác muốn đi cùng.",
+      ],
+    },
     choices: [
       {
         id: "start-new-road",

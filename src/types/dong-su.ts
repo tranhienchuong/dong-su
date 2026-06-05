@@ -94,6 +94,7 @@ export type StorySceneData = {
   characterIds: string[];
   itemIds: string[];
   text: string[];
+  textVariants?: Partial<Record<PersonaKey, string[]>>;
   choices: StoryChoice[];
   historicalNote?: FactCardData;
 };
