@@ -13,6 +13,13 @@ type BuildEndingPromptInput = {
   endingKey: EpisodeEnding["id"];
 };
 
+type BuildHistoricalNotePromptInput = {
+  sceneTitle: string;
+  noteTitle: string;
+  noteBody: string;
+  question: string;
+};
+
 export function buildEndingPrompt({
   stats,
   memory,
@@ -46,6 +53,29 @@ Không nhắc đến "người chơi".
 Không tiết lộ số điểm.
 Không bịa thêm sự kiện ngoài hành trình trên.
 Chỉ nhận xét về kiểu Chu Nguyên Chương đã được tạo ra.`;
+}
+
+export function buildHistoricalNotePrompt({
+  sceneTitle,
+  noteTitle,
+  noteBody,
+  question,
+}: BuildHistoricalNotePromptInput): string {
+  return `Bạn là trợ lý lịch sử cho web Dòng Sử.
+
+Cảnh: ${sceneTitle}
+Ghi chú: ${noteTitle}
+Nội dung ghi chú:
+${noteBody}
+
+Câu hỏi:
+${question}
+
+Trả lời 2-3 câu.
+Chỉ dựa trên nội dung ghi chú.
+Nếu ghi chú hiện tại không có thông tin để trả lời câu hỏi, trả lời đúng câu sau:
+"Ghi chú hiện tại chưa có thông tin này."
+Không bịa, không mở rộng ngoài context.`;
 }
 
 function summarizeMemory(memory: MemoryFlag[]): string {
