@@ -12,25 +12,25 @@ const zhuYuanzhangAudioBasePath = "/audio/dong-su";
 export const zhuYuanzhangAudioTracks = [
   {
     id: "field",
-    label: "GiÃ³ Ä‘á»“ng",
+    label: "Gió đồng",
     range: [1, 4],
     src: `${zhuYuanzhangAudioBasePath}/scene-01-04-field-wind-sad.mp3`,
   },
   {
     id: "temple",
-    label: "ChÃ¹a cá»•",
+    label: "Chùa cổ",
     range: [5, 8],
     src: `${zhuYuanzhangAudioBasePath}/scene-05-08-temple-bell-ambient.mp3`,
   },
   {
     id: "camp",
-    label: "Doanh tráº¡i",
+    label: "Doanh trại",
     range: [9, 12],
     src: `${zhuYuanzhangAudioBasePath}/scene-09-12-rebel-camp-fire-drums.mp3`,
   },
   {
     id: "battle",
-    label: "Trá»‘ng tráº­n",
+    label: "Trống trận",
     range: [13, 16],
     src: `${zhuYuanzhangAudioBasePath}/scene-13-16-battle-drum-heroic.mp3`,
   },
