@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { applyStatChanges, getEndingForStats } from "@/lib/dong-su/game";
+import {
+  applyStatChanges,
+  getChoiceHint,
+  getEpisodeOutcome,
+  resolveChoiceResultText,
+  resolveSceneText,
+} from "@/lib/dong-su/game";
 import {
   formatSavedAt,
   parseSavedProgress,
@@ -11,6 +17,7 @@ import {
 import type {
   Character,
   Episode,
+  MemoryFlag,
   Relic,
   Stats,
   StoryChoice,
@@ -27,6 +34,7 @@ export function useEpisodeProgress({
 }: UseEpisodeProgressOptions) {
   const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
   const [stats, setStats] = useState<Stats>({ ...episode.initialStats });
+  const [memory, setMemory] = useState<MemoryFlag[]>([]);
   const [selectedChoice, setSelectedChoice] = useState<StoryChoice | null>(
     null,
   );
@@ -44,9 +52,16 @@ export function useEpisodeProgress({
   const backdropImage = hasStarted
     ? currentScene.backgroundImage
     : episode.mapImage;
-  const ending = useMemo(
-    () => getEndingForStats(episode, stats),
-    [episode, stats],
+  const outcome = useMemo(
+    () => getEpisodeOutcome(episode, stats, memory),
+    [episode, memory, stats],
+  );
+  const displayScene = useMemo(
+    () => ({
+      ...currentScene,
+      text: resolveSceneText(currentScene, outcome.personaKey),
+    }),
+    [currentScene, outcome.personaKey],
   );
   const currentCharacters = useMemo<Character[]>(
     () =>
@@ -100,6 +115,7 @@ export function useEpisodeProgress({
       stats,
       selectedChoiceId: selectedChoice?.id ?? null,
       resultText,
+      memory,
       isEnded,
       hasStarted,
       savedAt: new Date().toISOString(),
@@ -116,6 +132,7 @@ export function useEpisodeProgress({
     hasMounted,
     hasStarted,
     isEnded,
+    memory,
     resultText,
     saveKey,
     saveLoaded,
@@ -148,6 +165,7 @@ export function useEpisodeProgress({
 
     setCurrentSceneIndex(savedProgress.currentSceneIndex);
     setStats({ ...savedProgress.stats });
+    setMemory([...savedProgress.memory]);
     setSelectedChoice(restoredChoice);
     setResultText(savedProgress.resultText);
     setIsEnded(savedProgress.isEnded);
@@ -165,11 +183,24 @@ export function useEpisodeProgress({
       return;
     }
 
+    const resolvedResultText = resolveChoiceResultText(
+      choice,
+      stats,
+      memory,
+    );
+
     setStats((currentStats) => applyStatChanges(currentStats, choice));
+    setMemory((currentMemory) => [
+      ...currentMemory,
+      ...(choice.memory ?? []),
+    ]);
     setSelectedChoice(choice);
-    setResultText(choice.resultText);
+    setResultText(resolvedResultText);
     setShowFact(false);
   };
+
+  const getChoiceHintForChoice = (choice: StoryChoice) =>
+    getChoiceHint(choice, stats, memory);
 
   const handleContinue = () => {
     if (!selectedChoice) {
@@ -202,6 +233,7 @@ export function useEpisodeProgress({
     clearSavedProgress();
     setCurrentSceneIndex(0);
     setStats({ ...episode.initialStats });
+    setMemory([]);
     setSelectedChoice(null);
     setResultText(null);
     setIsEnded(false);
@@ -214,9 +246,11 @@ export function useEpisodeProgress({
     clearSavedProgress,
     currentCharacters,
     currentRelics,
-    currentScene,
+    currentScene: displayScene,
     currentSceneIndex,
-    ending,
+    ending: outcome.ending,
+    endingKey: outcome.endingKey,
+    getChoiceHintForChoice,
     handleChoose,
     handleContinue,
     handleContinueSavedProgress,
@@ -225,6 +259,10 @@ export function useEpisodeProgress({
     hasMounted,
     hasStarted,
     isEnded,
+    memory,
+    outcome,
+    persona: outcome.persona,
+    personaKey: outcome.personaKey,
     resultText,
     savedAtLabel,
     savedProgress,

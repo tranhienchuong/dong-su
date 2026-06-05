@@ -2,6 +2,49 @@ export type StatKey = "danTam" | "nghiaKhi" | "quanUy" | "nhanTinh" | "daTam";
 
 export type Stats = Record<StatKey, number>;
 
+export type MemoryFlag =
+  | "shared_food"
+  | "protected_weak"
+  | "chose_power"
+  | "protected_brothers"
+  | "defied_authority"
+  | "showed_mercy"
+  | "chose_discipline"
+  | "led_by_example"
+  | "used_fear"
+  | "accepted_humiliation"
+  | "remembered_hunger"
+  | "chose_survival"
+  | "protected_dignity"
+  | "took_responsibility";
+
+export type PersonaKey =
+  | "iron-ruler"
+  | "people-hearted"
+  | "brotherhood-leader"
+  | "balanced-founder"
+  | "survivor";
+
+export type PersonaProfile = {
+  key: PersonaKey;
+  label: string;
+  description: string;
+};
+
+export type ChoiceCondition = {
+  stat?: Partial<Record<StatKey, number>>;
+  memoryIncludes?: MemoryFlag[];
+};
+
+export type ChoiceResultVariant = {
+  condition: ChoiceCondition;
+  resultText: string;
+};
+
+export type ChoiceSoftRequirement = ChoiceCondition & {
+  hintText: string;
+};
+
 export type Character = {
   id: string;
   name: string;
@@ -27,6 +70,9 @@ export type StoryChoice = {
   resultText: string;
   nextSceneId: string | null;
   endingId?: EpisodeEnding["id"];
+  memory?: MemoryFlag[];
+  resultVariants?: ChoiceResultVariant[];
+  softRequirement?: ChoiceSoftRequirement;
 };
 
 export type FactCardData = {
@@ -48,6 +94,7 @@ export type StorySceneData = {
   characterIds: string[];
   itemIds: string[];
   text: string[];
+  textVariants?: Partial<Record<PersonaKey, string[]>>;
   choices: StoryChoice[];
   historicalNote?: FactCardData;
 };
@@ -62,6 +109,16 @@ export type EpisodeEnding = {
   id: "balanced" | "humane" | "ambitious";
   title: string;
   body: string;
+};
+
+export type EndingKey = EpisodeEnding["id"];
+
+export type EpisodeOutcome = {
+  endingKey: EndingKey;
+  ending: EpisodeEnding;
+  personaKey: PersonaKey;
+  persona: PersonaProfile;
+  scores: Record<EndingKey, number>;
 };
 
 export type Episode = {

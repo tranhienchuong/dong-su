@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import type { FactCardData } from "@/types/dong-su";
 
 type FactCardProps = {
@@ -16,6 +16,11 @@ export function FactCard({
   onClose,
   sceneTitle,
 }: FactCardProps) {
+  const [answer, setAnswer] = useState<string | null>(null);
+  const [errorText, setErrorText] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [question, setQuestion] = useState("");
+
   useEffect(() => {
     if (!isOpen) {
       return;
@@ -31,8 +36,65 @@ export function FactCard({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
+  useEffect(() => {
+    setAnswer(null);
+    setErrorText(null);
+    setIsLoading(false);
+  }, [sceneTitle, historicalNote?.title, historicalNote?.body]);
+
   if (!isOpen || !historicalNote) {
     return null;
+  }
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!historicalNote) {
+      return;
+    }
+
+    const trimmedQuestion = question.trim();
+
+    if (!trimmedQuestion) {
+      return;
+    }
+
+    setAnswer(null);
+    setErrorText(null);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/historical-note", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          noteBody: historicalNote.body,
+          noteTitle: historicalNote.title,
+          question: trimmedQuestion,
+          sceneTitle,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Historical note request failed");
+      }
+
+      const data = (await response.json()) as { answer?: unknown };
+      const nextAnswer =
+        typeof data.answer === "string" ? data.answer.trim() : "";
+
+      if (nextAnswer) {
+        setAnswer(nextAnswer);
+      } else {
+        setErrorText("Chưa thể trả lời lúc này.");
+      }
+    } catch {
+      setErrorText("Chưa thể trả lời lúc này.");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -80,6 +142,50 @@ export function FactCard({
             {historicalNote.body}
           </p>
         </article>
+
+        <form
+          className="mt-5 border-t border-old-gold/20 pt-4"
+          onSubmit={handleSubmit}
+        >
+          <label
+            className="text-sm font-medium text-old-gold"
+            htmlFor="historical-note-question"
+          >
+            Hỏi thêm
+          </label>
+          <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+            <input
+              className="min-h-11 flex-1 rounded-sm border border-old-gold/30 bg-black/35 px-3 py-2 text-sm text-parchment outline-none transition placeholder:text-stone-500 focus:border-faded-gold focus:ring-2 focus:ring-faded-gold/40"
+              disabled={isLoading}
+              id="historical-note-question"
+              onChange={(event) => setQuestion(event.target.value)}
+              placeholder="Nhập câu hỏi"
+              type="text"
+              value={question}
+            />
+            <button
+              className="inline-flex min-h-11 items-center justify-center rounded-sm border border-old-gold/45 bg-umber px-4 py-2 text-parchment transition hover:-translate-y-0.5 hover:border-faded-gold hover:bg-oxblood focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80 disabled:cursor-not-allowed disabled:opacity-60"
+              disabled={isLoading || !question.trim()}
+              type="submit"
+            >
+              {isLoading ? "Đang hỏi..." : "Hỏi"}
+            </button>
+          </div>
+        </form>
+
+        <div aria-live="polite" className="mt-4">
+          {answer ? (
+            <div className="rounded-sm border border-old-gold/25 bg-black/35 p-4">
+              <p className="text-sm font-medium text-old-gold">Trả lời</p>
+              <p className="mt-2 leading-7 text-stone-300">{answer}</p>
+            </div>
+          ) : null}
+          {errorText ? (
+            <p className="rounded-sm border border-oxblood/40 bg-oxblood/15 px-3 py-2 text-sm text-stone-200">
+              {errorText}
+            </p>
+          ) : null}
+        </div>
       </section>
     </div>
   );

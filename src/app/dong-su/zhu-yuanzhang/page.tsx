@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { AIEndingNarrative } from "@/components/dong-su/AIEndingNarrative";
 import { ChoiceButton } from "@/components/dong-su/ChoiceButton";
 import { DongSuShell } from "@/components/dong-su/DongSuShell";
 import { FactCard } from "@/components/dong-su/FactCard";
@@ -22,6 +23,8 @@ export default function ZhuYuanzhangEpisodePage() {
     currentRelics,
     currentScene,
     ending,
+    endingKey,
+    getChoiceHintForChoice,
     handleChoose,
     handleContinue,
     handleContinueSavedProgress,
@@ -30,6 +33,9 @@ export default function ZhuYuanzhangEpisodePage() {
     hasMounted,
     hasStarted,
     isEnded,
+    memory,
+    persona,
+    personaKey,
     resultText,
     savedAtLabel,
     savedProgress,
@@ -170,12 +176,34 @@ export default function ZhuYuanzhangEpisodePage() {
                       Từ hôm nay, ta là Chu Nguyên Chương.
                     </p>
                   </div>
+                  <div
+                    className="mt-6 rounded-sm border border-old-gold/35 bg-black/35 p-4"
+                    data-ending-key={endingKey}
+                    data-persona-key={personaKey}
+                  >
+                    <p className="text-xs uppercase tracking-[0.22em] text-old-gold">
+                      Chân dung của ngươi
+                    </p>
+                    <p className="mt-2 font-serif text-2xl text-faded-gold">
+                      {persona.label}
+                    </p>
+                    <p className="mt-2 leading-7 text-stone-300">
+                      {persona.description}
+                    </p>
+                  </div>
                   <h2 className="dong-su-text-shadow mt-7 font-serif text-4xl leading-tight text-faded-gold sm:text-6xl">
                     {ending.title}
                   </h2>
                   <p className="mt-5 max-w-3xl font-serif text-xl leading-9 text-parchment">
                     {ending.body}
                   </p>
+                  <AIEndingNarrative
+                    endingKey={endingKey}
+                    episodeId={episode.id}
+                    memory={memory}
+                    personaKey={personaKey}
+                    stats={stats}
+                  />
                   <div className="mt-7 flex flex-wrap gap-3">
                     <button
                       className="inline-flex min-h-11 items-center justify-center rounded-sm border border-old-gold/45 bg-umber px-4 py-2 text-parchment transition hover:-translate-y-0.5 hover:border-faded-gold hover:bg-oxblood focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80"
@@ -207,6 +235,7 @@ export default function ZhuYuanzhangEpisodePage() {
                     <ChoiceButton
                       choice={choice}
                       disabled={Boolean(selectedChoice)}
+                      hintText={getChoiceHintForChoice(choice)}
                       key={choice.id}
                       onChoose={handleChoose}
                       selected={selectedChoice?.id === choice.id}
