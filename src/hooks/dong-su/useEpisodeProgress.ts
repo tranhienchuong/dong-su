@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { applyStatChanges, getEpisodeOutcome } from "@/lib/dong-su/game";
+import {
+  applyStatChanges,
+  getChoiceHint,
+  getEpisodeOutcome,
+  resolveChoiceResultText,
+} from "@/lib/dong-su/game";
 import {
   formatSavedAt,
   parseSavedProgress,
@@ -170,15 +175,24 @@ export function useEpisodeProgress({
       return;
     }
 
+    const resolvedResultText = resolveChoiceResultText(
+      choice,
+      stats,
+      memory,
+    );
+
     setStats((currentStats) => applyStatChanges(currentStats, choice));
     setMemory((currentMemory) => [
       ...currentMemory,
       ...(choice.memory ?? []),
     ]);
     setSelectedChoice(choice);
-    setResultText(choice.resultText);
+    setResultText(resolvedResultText);
     setShowFact(false);
   };
+
+  const getChoiceHintForChoice = (choice: StoryChoice) =>
+    getChoiceHint(choice, stats, memory);
 
   const handleContinue = () => {
     if (!selectedChoice) {
@@ -228,6 +242,7 @@ export function useEpisodeProgress({
     currentSceneIndex,
     ending: outcome.ending,
     endingKey: outcome.endingKey,
+    getChoiceHintForChoice,
     handleChoose,
     handleContinue,
     handleContinueSavedProgress,

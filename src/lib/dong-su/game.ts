@@ -1,4 +1,5 @@
 import type {
+  ChoiceCondition,
   EndingKey,
   Episode,
   EpisodeEnding,
@@ -70,6 +71,58 @@ export function getHighestStat(stats: Stats): StatKey {
 
 export function countMemory(memory: MemoryFlag[], flag: MemoryFlag): number {
   return memory.filter((item) => item === flag).length;
+}
+
+export function meetsCondition(
+  condition: ChoiceCondition,
+  stats: Stats,
+  memory: MemoryFlag[] = [],
+): boolean {
+  if (condition.stat) {
+    for (const [stat, threshold] of Object.entries(
+      condition.stat,
+    ) as [StatKey, number][]) {
+      if (stats[stat] < threshold) {
+        return false;
+      }
+    }
+  }
+
+  if (condition.memoryIncludes) {
+    for (const flag of condition.memoryIncludes) {
+      if (!memory.includes(flag)) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+export function resolveChoiceResultText(
+  choice: StoryChoice,
+  stats: Stats,
+  memory: MemoryFlag[] = [],
+): string {
+  const matchedVariant = choice.resultVariants?.find((variant) =>
+    meetsCondition(variant.condition, stats, memory),
+  );
+
+  return matchedVariant?.resultText ?? choice.resultText;
+}
+
+export function getChoiceHint(
+  choice: StoryChoice,
+  stats: Stats,
+  memory: MemoryFlag[] = [],
+): string | null {
+  if (!choice.softRequirement) {
+    return null;
+  }
+
+  const { hintText, ...condition } = choice.softRequirement;
+
+  return meetsCondition(condition, stats, memory) ? null : hintText;
 }
 
 function getMemoryPersona(stats: Stats, memory: MemoryFlag[]): PersonaKey | null {

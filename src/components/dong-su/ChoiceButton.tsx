@@ -5,6 +5,7 @@ import type { StatKey, StoryChoice } from "@/types/dong-su";
 type ChoiceButtonProps = {
   choice: StoryChoice;
   disabled?: boolean;
+  hintText?: string | null;
   statLabels: Record<StatKey, string>;
   onChoose: (choice: StoryChoice) => void;
   selected?: boolean;
@@ -21,6 +22,7 @@ const statBadgeClasses: Record<StatKey, string> = {
 export function ChoiceButton({
   choice,
   disabled = false,
+  hintText = null,
   statLabels,
   onChoose,
   selected = false,
@@ -46,6 +48,12 @@ export function ChoiceButton({
       <span className="mt-1.5 block text-sm leading-6 text-stone-300">
         {choice.description}
       </span>
+
+      {hintText ? (
+        <span className="mt-2 block rounded-sm border border-old-gold/25 bg-black/25 px-3 py-2 text-xs leading-5 text-old-gold">
+          {hintText}
+        </span>
+      ) : null}
 
       <span className="mt-3 flex flex-wrap gap-2">
         {statEntries.map(([stat, value]) => (

@@ -31,6 +31,20 @@ export type PersonaProfile = {
   description: string;
 };
 
+export type ChoiceCondition = {
+  stat?: Partial<Record<StatKey, number>>;
+  memoryIncludes?: MemoryFlag[];
+};
+
+export type ChoiceResultVariant = {
+  condition: ChoiceCondition;
+  resultText: string;
+};
+
+export type ChoiceSoftRequirement = ChoiceCondition & {
+  hintText: string;
+};
+
 export type Character = {
   id: string;
   name: string;
@@ -57,6 +71,8 @@ export type StoryChoice = {
   nextSceneId: string | null;
   endingId?: EpisodeEnding["id"];
   memory?: MemoryFlag[];
+  resultVariants?: ChoiceResultVariant[];
+  softRequirement?: ChoiceSoftRequirement;
 };
 
 export type FactCardData = {

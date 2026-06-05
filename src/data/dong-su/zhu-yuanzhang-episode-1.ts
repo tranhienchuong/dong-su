@@ -235,6 +235,18 @@ export const scenes = [
         description: "Chọn bữa no trước mắt dù biết tai họa sẽ đến.",
         effects: { nghiaKhi: 2, daTam: 2, nhanTinh: -1 },
         memory: ["protected_brothers", "chose_survival"],
+        softRequirement: {
+          memoryIncludes: ["remembered_hunger"],
+          hintText:
+            "Nếu trước đó đã khắc sâu cái đói, lựa chọn này sẽ nặng hơn.",
+        },
+        resultVariants: [
+          {
+            condition: { memoryIncludes: ["remembered_hunger"] },
+            resultText:
+              "Ký ức bụng đói khiến tay cậu không run. Đám trẻ ăn trong im lặng, còn Chu Trùng Bát hiểu có những tội lỗi sinh ra từ một bữa cơm quá xa.",
+          },
+        ],
         resultText:
           "Đám trẻ nhìn cậu như nhìn người dám làm điều không ai dám nói. Cơn đói đã có người đứng mũi chịu sào.",
         nextSceneId: "thirteen-rice",
@@ -288,6 +300,18 @@ export const scenes = [
         description: "Để cái đói trở thành vật chứng không thể quên.",
         effects: { daTam: 2, nhanTinh: 1 },
         memory: ["remembered_hunger", "chose_power"],
+        softRequirement: {
+          memoryIncludes: ["protected_brothers"],
+          hintText:
+            "Lời thề này sẽ khác nếu người đã từng đứng ra vì huynh đệ.",
+        },
+        resultVariants: [
+          {
+            condition: { memoryIncludes: ["protected_brothers"] },
+            resultText:
+              "Cậu cất những hạt gạo như cất cả lời hứa với đám trẻ ngày trước. Cái đói không còn là nỗi đau riêng, mà là món nợ với những người từng nhìn cậu chờ một bữa no.",
+          },
+        ],
         resultText:
           "Cậu cất những hạt gạo như cất tên người thân. Từ nay, cái đói có hình hài rõ rệt.",
         nextSceneId: "famine-home",
@@ -615,6 +639,18 @@ export const scenes = [
         description: "Tìm lý do phía sau lá cờ và tiếng trống.",
         effects: { danTam: 2, daTam: 1 },
         memory: ["protected_weak", "chose_power"],
+        softRequirement: {
+          memoryIncludes: ["protected_weak"],
+          hintText:
+            "Câu hỏi này sẽ sắc hơn nếu trước đó người từng che chở kẻ yếu.",
+        },
+        resultVariants: [
+          {
+            condition: { memoryIncludes: ["protected_weak"] },
+            resultText:
+              "Câu hỏi bật ra từ những lần ông đã thấy người yếu bị xô xuống bùn. Quách Tử Hưng nhìn ông lâu hơn, vì đó không còn là câu hỏi kiếm cơm, mà là câu hỏi về lý do cầm cờ.",
+          },
+        ],
         resultText:
           "Câu hỏi khiến Quách Tử Hưng nhìn ông lâu hơn. Người chỉ cần cơm sẽ im lặng, người muốn thiên hạ sẽ hỏi vì ai mà đánh.",
         nextSceneId: "warm-bread-night",
@@ -827,6 +863,18 @@ export const scenes = [
         description: "Đặt lòng nghĩa khí vào ngay giữa mũi tên.",
         effects: { danTam: 2, nghiaKhi: 2, quanUy: 1 },
         memory: ["protected_weak", "led_by_example"],
+        softRequirement: {
+          stat: { nghiaKhi: 4 },
+          hintText:
+            "Nghĩa khí đã gây dựng sẽ khiến tiếng xông lên có sức kéo hơn.",
+        },
+        resultVariants: [
+          {
+            condition: { stat: { nghiaKhi: 4 } },
+            resultText:
+              "Ông lao lên trước, và lần này không phải chỉ có lòng nóng dẫn đường. Nghĩa khí đã tích lại từ nhiều lần đứng cùng người khác kéo cả hàng quân bật khỏi do dự.",
+          },
+        ],
         resultText:
           "Ông lao lên trước, kéo theo những người còn do dự. Khi bụi lắng xuống, binh lính nhớ ai đã đến với họ.",
         nextSceneId: "prison-cell",
@@ -869,6 +917,18 @@ export const scenes = [
         description: "Để người khác thấy mình dám chịu điều đã làm.",
         effects: { quanUy: 2, daTam: 1 },
         memory: ["took_responsibility", "chose_power"],
+        softRequirement: {
+          memoryIncludes: ["defied_authority"],
+          hintText:
+            "Nếu đã từng chống lại quyền uy, lời nhận tội sẽ cứng hơn.",
+        },
+        resultVariants: [
+          {
+            condition: { memoryIncludes: ["defied_authority"] },
+            resultText:
+              "Ông nhận tội bằng giọng bình thản của kẻ đã biết cái giá khi chống lại mệnh lệnh. Cửa ngục không rộng, nhưng bên trong nó có một người không định trả lại quyền tự xét mình.",
+          },
+        ],
         resultText:
           "Ông nhận tội bằng giọng bình thản. Cửa ngục không rộng, nhưng khí thế trong đó không hề nhỏ.",
         nextSceneId: "new-name-ceremony",
@@ -932,6 +992,18 @@ export const scenes = [
         description: "Buộc cái tên mới phải mang theo dân nghèo phía sau.",
         effects: { danTam: 2, nhanTinh: 1 },
         memory: ["remembered_hunger", "protected_weak"],
+        softRequirement: {
+          memoryIncludes: ["remembered_hunger"],
+          hintText:
+            "Ký ức đói nghèo đã giữ từ trước sẽ làm lời thề này sâu hơn.",
+        },
+        resultVariants: [
+          {
+            condition: { memoryIncludes: ["remembered_hunger"] },
+            resultText:
+              "Ông gọi lại những ngày bếp lạnh, mười ba hạt gạo và những bụng đói từng đi qua đời mình. Tên mới có thể sáng, nhưng nếu quên gốc cũ, nó sẽ chỉ là một lớp giáp rỗng.",
+          },
+        ],
         resultText:
           "Ông gọi lại những ngày bếp lạnh trong lòng. Tên mới có thể sáng, nhưng gốc cũ vẫn phải còn.",
         nextSceneId: "zhu-yuanzhang-dawn",

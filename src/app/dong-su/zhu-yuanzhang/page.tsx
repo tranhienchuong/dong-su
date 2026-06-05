@@ -24,6 +24,7 @@ export default function ZhuYuanzhangEpisodePage() {
     currentScene,
     ending,
     endingKey,
+    getChoiceHintForChoice,
     handleChoose,
     handleContinue,
     handleContinueSavedProgress,
@@ -234,6 +235,7 @@ export default function ZhuYuanzhangEpisodePage() {
                     <ChoiceButton
                       choice={choice}
                       disabled={Boolean(selectedChoice)}
+                      hintText={getChoiceHintForChoice(choice)}
                       key={choice.id}
                       onChoose={handleChoose}
                       selected={selectedChoice?.id === choice.id}
