@@ -5,7 +5,6 @@
 Before making any code changes, always read:
 
 - `spec.md`
-- `README.md`
 - The files directly related to the requested task
 
 For Phase 12 / Thiên Mệnh Engine, `spec.md` is the primary source of truth.
