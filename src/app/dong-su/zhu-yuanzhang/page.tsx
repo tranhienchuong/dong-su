@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { AIEndingNarrative } from "@/components/dong-su/AIEndingNarrative";
 import { ChoiceButton } from "@/components/dong-su/ChoiceButton";
 import { DongSuShell } from "@/components/dong-su/DongSuShell";
 import { FactCard } from "@/components/dong-su/FactCard";
@@ -31,6 +32,7 @@ export default function ZhuYuanzhangEpisodePage() {
     hasMounted,
     hasStarted,
     isEnded,
+    memory,
     persona,
     personaKey,
     resultText,
@@ -194,6 +196,13 @@ export default function ZhuYuanzhangEpisodePage() {
                   <p className="mt-5 max-w-3xl font-serif text-xl leading-9 text-parchment">
                     {ending.body}
                   </p>
+                  <AIEndingNarrative
+                    endingKey={endingKey}
+                    episodeId={episode.id}
+                    memory={memory}
+                    personaKey={personaKey}
+                    stats={stats}
+                  />
                   <div className="mt-7 flex flex-wrap gap-3">
                     <button
                       className="inline-flex min-h-11 items-center justify-center rounded-sm border border-old-gold/45 bg-umber px-4 py-2 text-parchment transition hover:-translate-y-0.5 hover:border-faded-gold hover:bg-oxblood focus:outline-none focus-visible:ring-2 focus-visible:ring-faded-gold/80"
