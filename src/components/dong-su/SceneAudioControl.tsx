@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   getTrackForChapter,
   type SceneAudioTrackList,
-} from "@/data/dong-su/audio";
+} from "@/data/dong-su/audio-tracks";
 
 type SceneAudioControlProps = {
   currentChapter: number;
@@ -23,7 +23,8 @@ export function SceneAudioControl({
   const [enabled, setEnabled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [currentTrackId, setCurrentTrackId] = useState<string | null>(null);
-  const currentTrack = getTrackForChapter(currentChapter, tracks);
+  const currentTrack =
+    tracks.length > 0 ? getTrackForChapter(currentChapter, tracks) : null;
 
   useEffect(() => {
     setMounted(true);
@@ -56,7 +57,13 @@ export function SceneAudioControl({
       return;
     }
 
-    if (!enabled || !isActive) {
+    if (!currentTrack) {
+      audio.pause();
+      setCurrentTrackId(null);
+      return;
+    }
+
+    if (!isActive) {
       audio.pause();
       return;
     }
@@ -67,14 +74,18 @@ export function SceneAudioControl({
       setCurrentTrackId(currentTrack.id);
     }
 
+    if (!enabled) {
+      audio.pause();
+      return;
+    }
+
     audio.volume = 0.25;
     void audio.play().catch(() => {
       audio.pause();
       setEnabled(false);
     });
   }, [
-    currentTrack.id,
-    currentTrack.src,
+    currentTrack,
     currentTrackId,
     enabled,
     isActive,
@@ -84,6 +95,10 @@ export function SceneAudioControl({
   const handleToggleAudio = () => {
     setEnabled((currentEnabled) => !currentEnabled);
   };
+
+  if (!currentTrack) {
+    return null;
+  }
 
   return (
     <>

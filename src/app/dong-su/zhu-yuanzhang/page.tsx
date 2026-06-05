@@ -7,8 +7,8 @@ import { FactCard } from "@/components/dong-su/FactCard";
 import { SceneAudioControl } from "@/components/dong-su/SceneAudioControl";
 import { StatPanel } from "@/components/dong-su/StatPanel";
 import { StoryScene } from "@/components/dong-su/StoryScene";
-import { zhuYuanzhangEpisodeOneAudioTracks } from "@/data/dong-su/audio";
-import { useEpisodeProgress } from "@/hooks/dong-su/useEpisodeProgress";
+import { zhuYuanzhangAudioTracks } from "@/data/dong-su/audio-tracks";
+import { useEpisodeProgress } from "@/hooks/useEpisodeProgress";
 import { zhuYuanzhangEpisodeOne } from "@/data/dong-su/zhu-yuanzhang-episode-1";
 
 const episode = zhuYuanzhangEpisodeOne;
@@ -16,6 +16,7 @@ const SAVE_KEY = "dong-su:zhu-yuanzhang:episode-1:progress";
 
 export default function ZhuYuanzhangEpisodePage() {
   const {
+    backdropImage,
     clearSavedProgress,
     currentCharacters,
     currentRelics,
@@ -38,9 +39,6 @@ export default function ZhuYuanzhangEpisodePage() {
     showFact,
     stats,
   } = useEpisodeProgress({ episode, saveKey: SAVE_KEY });
-  const backdropImage = hasStarted
-    ? currentScene.backgroundImage
-    : episode.mapImage;
 
   return (
     <DongSuShell
@@ -249,7 +247,7 @@ export default function ZhuYuanzhangEpisodePage() {
       <SceneAudioControl
         currentChapter={currentScene.chapter}
         isActive={hasStarted}
-        tracks={zhuYuanzhangEpisodeOneAudioTracks}
+        tracks={zhuYuanzhangAudioTracks}
       />
     </DongSuShell>
   );

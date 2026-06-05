@@ -41,6 +41,9 @@ export function useEpisodeProgress({
   );
 
   const currentScene = episode.scenes[currentSceneIndex] ?? episode.scenes[0];
+  const backdropImage = hasStarted
+    ? currentScene.backgroundImage
+    : episode.mapImage;
   const ending = useMemo(
     () => getEndingForStats(episode, stats),
     [episode, stats],
@@ -207,6 +210,7 @@ export function useEpisodeProgress({
   };
 
   return {
+    backdropImage,
     clearSavedProgress,
     currentCharacters,
     currentRelics,

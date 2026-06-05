@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DongSuShell } from "@/components/dong-su/DongSuShell";
 import { EpisodeCard } from "@/components/dong-su/EpisodeCard";
 import { episodes } from "@/data/dong-su/episodes";
 
@@ -21,26 +22,10 @@ const experienceSteps = [
 
 export default function HomePage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-ink text-parchment">
-      <div
-        aria-hidden="true"
-        className="dong-su-bg-drift pointer-events-none absolute inset-0 opacity-30"
-        style={{
-          backgroundImage:
-            "linear-gradient(180deg, rgba(9,6,4,0.3), rgba(9,6,4,0.96)), url(/history/zhu-yuanzhang/maps/early-journey-map.webp)",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="dong-su-vignette pointer-events-none absolute inset-0"
-      />
-      <div
-        aria-hidden="true"
-        className="dong-su-dust pointer-events-none absolute inset-0"
-      />
-
+    <DongSuShell
+      backgroundImage="/history/zhu-yuanzhang/maps/early-journey-map.webp"
+      backgroundOpacityClass="opacity-30"
+    >
       <div className="relative mx-auto flex w-full max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8">
         <header className="flex items-center justify-between rounded-md border border-old-gold/20 bg-black/25 px-4 py-3 backdrop-blur-sm">
           <p className="text-xs uppercase tracking-[0.24em] text-old-gold">
@@ -203,6 +188,6 @@ export default function HomePage() {
           </div>
         </section>
       </div>
-    </main>
+    </DongSuShell>
   );
 }

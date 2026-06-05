@@ -3,15 +3,18 @@ import type { ReactNode } from "react";
 type DongSuShellProps = {
   backgroundImage: string;
   backgroundOpacityClass?: string;
-  backgroundGradient: string;
+  backgroundGradient?: string;
   children: ReactNode;
   showHorizontalShade?: boolean;
 };
 
+const defaultBackgroundGradient =
+  "linear-gradient(180deg, rgba(9,6,4,0.3), rgba(9,6,4,0.96))";
+
 export function DongSuShell({
   backgroundImage,
   backgroundOpacityClass = "opacity-35",
-  backgroundGradient,
+  backgroundGradient = defaultBackgroundGradient,
   children,
   showHorizontalShade = false,
 }: DongSuShellProps) {

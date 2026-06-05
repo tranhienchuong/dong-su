@@ -4,6 +4,7 @@ export type EpisodeCard = {
   subtitle: string;
   description: string;
   href: string;
+  archiveHref?: string;
   status: "available" | "coming-soon";
   coverImage: string;
   characterName: string;
@@ -19,6 +20,7 @@ export const episodes: EpisodeCard[] = [
     description:
       "Theo dấu một đứa trẻ đói nghèo đi qua cửa chùa, nghĩa quân và cái tên mới mở đầu cho triều Minh.",
     href: "/dong-su/zhu-yuanzhang",
+    archiveHref: "/dong-su/zhu-yuanzhang/archive",
     status: "available",
     coverImage: "/history/zhu-yuanzhang/scenes/16-zhu-yuanzhang-dawn.webp",
     characterName: "Chu Nguyên Chương",
