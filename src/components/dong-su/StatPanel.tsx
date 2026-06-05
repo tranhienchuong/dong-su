@@ -1,7 +1,4 @@
-import type {
-  StatKey,
-  Stats,
-} from "@/data/dong-su/zhu-yuanzhang-episode-1";
+import type { StatKey, Stats } from "@/types/dong-su";
 
 type StatPanelProps = {
   labels: Record<StatKey, string>;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import type { FactCardData } from "@/data/dong-su/zhu-yuanzhang-episode-1";
+import type { FactCardData } from "@/types/dong-su";
 
 type FactCardProps = {
   historicalNote?: FactCardData;

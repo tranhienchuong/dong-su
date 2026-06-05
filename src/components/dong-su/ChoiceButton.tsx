@@ -1,9 +1,6 @@
 "use client";
 
-import type {
-  StatKey,
-  StoryChoice,
-} from "@/data/dong-su/zhu-yuanzhang-episode-1";
+import type { StatKey, StoryChoice } from "@/types/dong-su";
 
 type ChoiceButtonProps = {
   choice: StoryChoice;

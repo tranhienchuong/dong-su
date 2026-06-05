@@ -1,11 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import type {
-  Character,
-  Relic,
-  StorySceneData,
-} from "@/data/dong-su/zhu-yuanzhang-episode-1";
+import type { Character, Relic, StorySceneData } from "@/types/dong-su";
 
 type StorySceneProps = {
   characters: Character[];

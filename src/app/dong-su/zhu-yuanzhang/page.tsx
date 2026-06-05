@@ -1,343 +1,53 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
 import { ChoiceButton } from "@/components/dong-su/ChoiceButton";
+import { DongSuShell } from "@/components/dong-su/DongSuShell";
 import { FactCard } from "@/components/dong-su/FactCard";
 import { SceneAudioControl } from "@/components/dong-su/SceneAudioControl";
 import { StatPanel } from "@/components/dong-su/StatPanel";
 import { StoryScene } from "@/components/dong-su/StoryScene";
-import {
-  type Character,
-  type EpisodeEnding,
-  type Relic,
-  type StatKey,
-  type Stats,
-  type StoryChoice,
-  zhuYuanzhangEpisodeOne,
-} from "@/data/dong-su/zhu-yuanzhang-episode-1";
+import { zhuYuanzhangEpisodeOneAudioTracks } from "@/data/dong-su/audio";
+import { useEpisodeProgress } from "@/hooks/dong-su/useEpisodeProgress";
+import { zhuYuanzhangEpisodeOne } from "@/data/dong-su/zhu-yuanzhang-episode-1";
 
 const episode = zhuYuanzhangEpisodeOne;
 const SAVE_KEY = "dong-su:zhu-yuanzhang:episode-1:progress";
-const SAVE_VERSION = 1;
-
-const statOrder: StatKey[] = [
-  "danTam",
-  "nghiaKhi",
-  "quanUy",
-  "nhanTinh",
-  "daTam",
-];
-
-type SavedProgress = {
-  version: number;
-  currentSceneIndex: number;
-  stats: Stats;
-  selectedChoiceId: string | null;
-  resultText: string | null;
-  isEnded: boolean;
-  hasStarted: boolean;
-  savedAt: string;
-};
-
-function isValidStats(value: unknown): value is Stats {
-  if (!value || typeof value !== "object") {
-    return false;
-  }
-
-  const stats = value as Record<StatKey, unknown>;
-
-  return statOrder.every((stat) => typeof stats[stat] === "number");
-}
-
-function parseSavedProgress(raw: string | null): SavedProgress | null {
-  if (!raw) {
-    return null;
-  }
-
-  try {
-    const parsed = JSON.parse(raw) as Partial<SavedProgress>;
-
-    if (
-      parsed.version !== SAVE_VERSION ||
-      typeof parsed.currentSceneIndex !== "number" ||
-      parsed.currentSceneIndex < 0 ||
-      parsed.currentSceneIndex >= episode.scenes.length ||
-      !isValidStats(parsed.stats) ||
-      !(
-        typeof parsed.selectedChoiceId === "string" ||
-        parsed.selectedChoiceId === null
-      ) ||
-      !(typeof parsed.resultText === "string" || parsed.resultText === null) ||
-      typeof parsed.isEnded !== "boolean" ||
-      typeof parsed.hasStarted !== "boolean" ||
-      typeof parsed.savedAt !== "string"
-    ) {
-      return null;
-    }
-
-    return {
-      version: parsed.version,
-      currentSceneIndex: parsed.currentSceneIndex,
-      stats: parsed.stats,
-      selectedChoiceId: parsed.selectedChoiceId,
-      resultText: parsed.resultText,
-      isEnded: parsed.isEnded,
-      hasStarted: parsed.hasStarted,
-      savedAt: parsed.savedAt,
-    };
-  } catch {
-    return null;
-  }
-}
-
-function formatSavedAt(savedAt: string): string | null {
-  const savedAtDate = new Date(savedAt);
-
-  if (Number.isNaN(savedAtDate.getTime())) {
-    return null;
-  }
-
-  return savedAtDate.toLocaleString();
-}
-
-function applyStatChanges(stats: Stats, choice: StoryChoice): Stats {
-  return statOrder.reduce<Stats>(
-    (nextStats, stat) => ({
-      ...nextStats,
-      [stat]: Math.max(0, nextStats[stat] + (choice.effects[stat] ?? 0)),
-    }),
-    { ...stats },
-  );
-}
-
-function getHighestStat(stats: Stats): StatKey {
-  return statOrder.reduce((highest, stat) =>
-    stats[stat] > stats[highest] ? stat : highest,
-  );
-}
-
-function getEndingForStats(stats: Stats): EpisodeEnding {
-  const highestStat = getHighestStat(stats);
-  const endingId: EpisodeEnding["id"] =
-    highestStat === "daTam" || highestStat === "quanUy"
-      ? "ambitious"
-      : highestStat === "danTam" || highestStat === "nhanTinh"
-        ? "humane"
-        : "balanced";
-
-  return (
-    episode.endings.find((ending) => ending.id === endingId) ??
-    episode.endings[0]
-  );
-}
 
 export default function ZhuYuanzhangEpisodePage() {
-  const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
-  const [stats, setStats] = useState<Stats>({ ...episode.initialStats });
-  const [selectedChoice, setSelectedChoice] = useState<StoryChoice | null>(
-    null,
-  );
-  const [resultText, setResultText] = useState<string | null>(null);
-  const [isEnded, setIsEnded] = useState(false);
-  const [showFact, setShowFact] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false);
-  const [hasMounted, setHasMounted] = useState(false);
-  const [saveLoaded, setSaveLoaded] = useState(false);
-  const [savedProgress, setSavedProgress] = useState<SavedProgress | null>(
-    null,
-  );
-
-  const currentScene = episode.scenes[currentSceneIndex] ?? episode.scenes[0];
-  const ending = useMemo(() => getEndingForStats(stats), [stats]);
-  const backdropImage = hasStarted
-    ? currentScene.backgroundImage
-    : episode.mapImage;
-
-  const currentCharacters = useMemo<Character[]>(
-    () =>
-      currentScene.characterIds
-        .map((characterId) =>
-          episode.characters.find((character) => character.id === characterId),
-        )
-        .filter((character): character is Character => Boolean(character)),
-    [currentScene.characterIds],
-  );
-
-  const currentRelics = useMemo<Relic[]>(
-    () =>
-      currentScene.itemIds
-        .map((itemId) => episode.relics.find((relic) => relic.id === itemId))
-        .filter((relic): relic is Relic => Boolean(relic)),
-    [currentScene.itemIds],
-  );
-  const savedAtLabel = useMemo(
-    () => (savedProgress ? formatSavedAt(savedProgress.savedAt) : null),
-    [savedProgress],
-  );
-
-  useEffect(() => {
-    setHasMounted(true);
-
-    try {
-      const parsed = parseSavedProgress(
-        window.localStorage.getItem(SAVE_KEY),
-      );
-      setSavedProgress(parsed);
-    } catch {
-      setSavedProgress(null);
-    } finally {
-      setSaveLoaded(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!hasMounted || !saveLoaded) {
-      return;
-    }
-
-    if (!hasStarted && !isEnded) {
-      return;
-    }
-
-    const progress: SavedProgress = {
-      version: SAVE_VERSION,
-      currentSceneIndex,
-      stats,
-      selectedChoiceId: selectedChoice?.id ?? null,
-      resultText,
-      isEnded,
-      hasStarted,
-      savedAt: new Date().toISOString(),
-    };
-
-    try {
-      window.localStorage.setItem(SAVE_KEY, JSON.stringify(progress));
-      setSavedProgress(progress);
-    } catch {
-      // Keep the story playable if localStorage is unavailable.
-    }
-  }, [
-    currentSceneIndex,
+  const {
+    clearSavedProgress,
+    currentCharacters,
+    currentRelics,
+    currentScene,
+    ending,
+    handleChoose,
+    handleContinue,
+    handleContinueSavedProgress,
+    handleRestart,
+    handleStart,
     hasMounted,
     hasStarted,
     isEnded,
     resultText,
+    savedAtLabel,
+    savedProgress,
     saveLoaded,
     selectedChoice,
+    setShowFact,
+    showFact,
     stats,
-  ]);
-
-  const clearSavedProgress = () => {
-    try {
-      window.localStorage.removeItem(SAVE_KEY);
-    } catch {
-      // Ignore localStorage failures; clearing UI state is still useful.
-    }
-
-    setSavedProgress(null);
-  };
-
-  const handleContinueSavedProgress = () => {
-    if (!savedProgress) {
-      return;
-    }
-
-    const savedScene =
-      episode.scenes[savedProgress.currentSceneIndex] ?? episode.scenes[0];
-    const restoredChoice = savedProgress.selectedChoiceId
-      ? (savedScene.choices.find(
-          (choice) => choice.id === savedProgress.selectedChoiceId,
-        ) ?? null)
-      : null;
-
-    setCurrentSceneIndex(savedProgress.currentSceneIndex);
-    setStats({ ...savedProgress.stats });
-    setSelectedChoice(restoredChoice);
-    setResultText(savedProgress.resultText);
-    setIsEnded(savedProgress.isEnded);
-    setHasStarted(savedProgress.hasStarted);
-    setShowFact(false);
-  };
-
-  const handleStart = () => {
-    setHasStarted(true);
-    setShowFact(false);
-  };
-
-  const handleChoose = (choice: StoryChoice) => {
-    if (selectedChoice) {
-      return;
-    }
-
-    setStats((currentStats) => applyStatChanges(currentStats, choice));
-    setSelectedChoice(choice);
-    setResultText(choice.resultText);
-    setShowFact(false);
-  };
-
-  const handleContinue = () => {
-    if (!selectedChoice) {
-      return;
-    }
-
-    if (!selectedChoice.nextSceneId) {
-      setIsEnded(true);
-      setShowFact(false);
-      return;
-    }
-
-    const nextSceneIndex = episode.scenes.findIndex(
-      (scene) => scene.id === selectedChoice.nextSceneId,
-    );
-
-    if (nextSceneIndex < 0) {
-      setIsEnded(true);
-      setShowFact(false);
-      return;
-    }
-
-    setCurrentSceneIndex(nextSceneIndex);
-    setSelectedChoice(null);
-    setResultText(null);
-    setShowFact(false);
-  };
-
-  const handleRestart = () => {
-    clearSavedProgress();
-    setCurrentSceneIndex(0);
-    setStats({ ...episode.initialStats });
-    setSelectedChoice(null);
-    setResultText(null);
-    setIsEnded(false);
-    setShowFact(false);
-    setHasStarted(false);
-  };
+  } = useEpisodeProgress({ episode, saveKey: SAVE_KEY });
+  const backdropImage = hasStarted
+    ? currentScene.backgroundImage
+    : episode.mapImage;
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-ink text-parchment">
-      <div
-        aria-hidden="true"
-        className="dong-su-bg-drift pointer-events-none absolute inset-0 opacity-35"
-        style={{
-          backgroundImage: `linear-gradient(180deg, rgba(9,6,4,0.35), rgba(9,6,4,0.96)), url(${backdropImage})`,
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(9,6,4,0.9),rgba(21,16,12,0.44),rgba(9,6,4,0.9))]"
-      />
-      <div
-        aria-hidden="true"
-        className="dong-su-vignette pointer-events-none absolute inset-0"
-      />
-      <div
-        aria-hidden="true"
-        className="dong-su-dust pointer-events-none absolute inset-0"
-      />
-
+    <DongSuShell
+      backgroundGradient="linear-gradient(180deg, rgba(9,6,4,0.35), rgba(9,6,4,0.96))"
+      backgroundImage={backdropImage}
+      showHorizontalShade
+    >
       <div className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-5 sm:px-6 lg:px-8">
         <header className="mb-5 rounded-md border border-old-gold/20 bg-black/25 px-4 py-4 backdrop-blur-sm sm:px-5">
           <p className="text-xs uppercase tracking-[0.22em] text-old-gold">
@@ -539,7 +249,8 @@ export default function ZhuYuanzhangEpisodePage() {
       <SceneAudioControl
         currentChapter={currentScene.chapter}
         isActive={hasStarted}
+        tracks={zhuYuanzhangEpisodeOneAudioTracks}
       />
-    </main>
+    </DongSuShell>
   );
 }

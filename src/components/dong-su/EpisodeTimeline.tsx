@@ -1,4 +1,4 @@
-import type { StorySceneData } from "@/data/dong-su/zhu-yuanzhang-episode-1";
+import type { StorySceneData } from "@/types/dong-su";
 
 type EpisodeTimelineProps = {
   scenes: StorySceneData[];

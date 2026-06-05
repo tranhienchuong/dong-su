@@ -1,4 +1,4 @@
-import type { Character } from "@/data/dong-su/zhu-yuanzhang-episode-1";
+import type { Character } from "@/types/dong-su";
 
 type CharacterGalleryProps = {
   characters: Character[];

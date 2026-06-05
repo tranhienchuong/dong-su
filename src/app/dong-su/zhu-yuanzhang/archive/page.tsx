@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CharacterGallery } from "@/components/dong-su/CharacterGallery";
+import { DongSuShell } from "@/components/dong-su/DongSuShell";
 import { EpisodeTimeline } from "@/components/dong-su/EpisodeTimeline";
 import { JourneyMap } from "@/components/dong-su/JourneyMap";
 import { RelicGallery } from "@/components/dong-su/RelicGallery";
@@ -9,25 +10,11 @@ const episode = zhuYuanzhangEpisodeOne;
 
 export default function ZhuYuanzhangArchivePage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-ink text-parchment">
-      <div
-        aria-hidden="true"
-        className="dong-su-bg-drift pointer-events-none absolute inset-0 opacity-30"
-        style={{
-          backgroundImage: `linear-gradient(180deg, rgba(9,6,4,0.32), rgba(9,6,4,0.96)), url(${episode.mapImage})`,
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="dong-su-vignette pointer-events-none absolute inset-0"
-      />
-      <div
-        aria-hidden="true"
-        className="dong-su-dust pointer-events-none absolute inset-0"
-      />
-
+    <DongSuShell
+      backgroundGradient="linear-gradient(180deg, rgba(9,6,4,0.32), rgba(9,6,4,0.96))"
+      backgroundImage={episode.mapImage}
+      backgroundOpacityClass="opacity-30"
+    >
       <div className="relative mx-auto flex w-full max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8">
         <header className="flex flex-col gap-3 rounded-md border border-old-gold/20 bg-black/30 px-4 py-3 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
           <Link
@@ -90,6 +77,6 @@ export default function ZhuYuanzhangArchivePage() {
           </section>
         </div>
       </div>
-    </main>
+    </DongSuShell>
   );
 }

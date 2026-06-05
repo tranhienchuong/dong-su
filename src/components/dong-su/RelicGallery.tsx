@@ -1,4 +1,4 @@
-import type { Relic } from "@/data/dong-su/zhu-yuanzhang-episode-1";
+import type { Relic } from "@/types/dong-su";
 
 type RelicGalleryProps = {
   relics: Relic[];
