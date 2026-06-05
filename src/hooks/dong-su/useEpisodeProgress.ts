@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { applyStatChanges, getEndingForStats } from "@/lib/dong-su/game";
+import { applyStatChanges, getEpisodeOutcome } from "@/lib/dong-su/game";
 import {
   formatSavedAt,
   parseSavedProgress,
@@ -11,6 +11,7 @@ import {
 import type {
   Character,
   Episode,
+  MemoryFlag,
   Relic,
   Stats,
   StoryChoice,
@@ -27,6 +28,7 @@ export function useEpisodeProgress({
 }: UseEpisodeProgressOptions) {
   const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
   const [stats, setStats] = useState<Stats>({ ...episode.initialStats });
+  const [memory, setMemory] = useState<MemoryFlag[]>([]);
   const [selectedChoice, setSelectedChoice] = useState<StoryChoice | null>(
     null,
   );
@@ -44,9 +46,9 @@ export function useEpisodeProgress({
   const backdropImage = hasStarted
     ? currentScene.backgroundImage
     : episode.mapImage;
-  const ending = useMemo(
-    () => getEndingForStats(episode, stats),
-    [episode, stats],
+  const outcome = useMemo(
+    () => getEpisodeOutcome(episode, stats, memory),
+    [episode, memory, stats],
   );
   const currentCharacters = useMemo<Character[]>(
     () =>
@@ -100,6 +102,7 @@ export function useEpisodeProgress({
       stats,
       selectedChoiceId: selectedChoice?.id ?? null,
       resultText,
+      memory,
       isEnded,
       hasStarted,
       savedAt: new Date().toISOString(),
@@ -116,6 +119,7 @@ export function useEpisodeProgress({
     hasMounted,
     hasStarted,
     isEnded,
+    memory,
     resultText,
     saveKey,
     saveLoaded,
@@ -148,6 +152,7 @@ export function useEpisodeProgress({
 
     setCurrentSceneIndex(savedProgress.currentSceneIndex);
     setStats({ ...savedProgress.stats });
+    setMemory([...savedProgress.memory]);
     setSelectedChoice(restoredChoice);
     setResultText(savedProgress.resultText);
     setIsEnded(savedProgress.isEnded);
@@ -166,6 +171,10 @@ export function useEpisodeProgress({
     }
 
     setStats((currentStats) => applyStatChanges(currentStats, choice));
+    setMemory((currentMemory) => [
+      ...currentMemory,
+      ...(choice.memory ?? []),
+    ]);
     setSelectedChoice(choice);
     setResultText(choice.resultText);
     setShowFact(false);
@@ -202,6 +211,7 @@ export function useEpisodeProgress({
     clearSavedProgress();
     setCurrentSceneIndex(0);
     setStats({ ...episode.initialStats });
+    setMemory([]);
     setSelectedChoice(null);
     setResultText(null);
     setIsEnded(false);
@@ -216,7 +226,8 @@ export function useEpisodeProgress({
     currentRelics,
     currentScene,
     currentSceneIndex,
-    ending,
+    ending: outcome.ending,
+    endingKey: outcome.endingKey,
     handleChoose,
     handleContinue,
     handleContinueSavedProgress,
@@ -225,6 +236,10 @@ export function useEpisodeProgress({
     hasMounted,
     hasStarted,
     isEnded,
+    memory,
+    outcome,
+    persona: outcome.persona,
+    personaKey: outcome.personaKey,
     resultText,
     savedAtLabel,
     savedProgress,

@@ -191,6 +191,7 @@ export const scenes = [
         label: "Hứa sẽ cho huynh đệ ăn no",
         description: "Biến trò chơi thành một lời hứa non nớt.",
         effects: { nghiaKhi: 2, daTam: 1 },
+        memory: ["protected_brothers", "remembered_hunger"],
         resultText:
           "Lời hứa bật ra như chuyện đùa, nhưng mắt đám trẻ bỗng sáng hơn một chút.",
         nextSceneId: "landlord-calf",
@@ -200,6 +201,7 @@ export const scenes = [
         label: "Cười cho qua như trò trẻ con",
         description: "Giữ niềm vui nhỏ bé trong một ngày còn có thể cười.",
         effects: { nhanTinh: 2, daTam: -1 },
+        memory: ["protected_dignity"],
         resultText:
           "Cậu cười xòa, ném que khô xuống đất. Ít nhất hôm nay, đám trẻ còn được quên đói trong chốc lát.",
         nextSceneId: "landlord-calf",
@@ -232,6 +234,7 @@ export const scenes = [
         label: "Ra tay để huynh đệ được ăn",
         description: "Chọn bữa no trước mắt dù biết tai họa sẽ đến.",
         effects: { nghiaKhi: 2, daTam: 2, nhanTinh: -1 },
+        memory: ["protected_brothers", "chose_survival"],
         resultText:
           "Đám trẻ nhìn cậu như nhìn người dám làm điều không ai dám nói. Cơn đói đã có người đứng mũi chịu sào.",
         nextSceneId: "thirteen-rice",
@@ -241,6 +244,7 @@ export const scenes = [
         label: "Ngăn mọi người lại",
         description: "Chặn cơn đói trước khi nó hóa thành tội.",
         effects: { nhanTinh: 2, nghiaKhi: -1 },
+        memory: ["showed_mercy", "protected_dignity"],
         resultText:
           "Cậu kéo đám bạn lùi khỏi bờ ruộng. Bụng vẫn đói, nhưng trong mắt cậu còn một lằn ranh chưa bị xóa.",
         nextSceneId: "thirteen-rice",
@@ -250,6 +254,7 @@ export const scenes = [
         label: "Một mình nhận tội",
         description: "Gánh phần nặng nhất để đám trẻ còn đường về nhà.",
         effects: { nghiaKhi: 2, quanUy: 1 },
+        memory: ["protected_brothers", "took_responsibility"],
         resultText:
           "Cậu bước ra trước lời quát mắng. Từ khoảnh khắc ấy, đám bạn biết ai sẽ đứng trước khi tai họa kéo tới.",
         nextSceneId: "thirteen-rice",
@@ -282,6 +287,7 @@ export const scenes = [
         label: "Giữ lại như lời thề",
         description: "Để cái đói trở thành vật chứng không thể quên.",
         effects: { daTam: 2, nhanTinh: 1 },
+        memory: ["remembered_hunger", "chose_power"],
         resultText:
           "Cậu cất những hạt gạo như cất tên người thân. Từ nay, cái đói có hình hài rõ rệt.",
         nextSceneId: "famine-home",
@@ -291,6 +297,7 @@ export const scenes = [
         label: "Ăn để sống tiếp",
         description: "Chọn hơi thở còn lại thay vì một biểu tượng.",
         effects: { quanUy: 1, daTam: 1 },
+        memory: ["chose_survival", "remembered_hunger"],
         resultText:
           "Mười ba hạt gạo tan rất nhanh trên đầu lưỡi. Sự sống đôi khi bắt đầu từ một điều gần như không có gì.",
         nextSceneId: "famine-home",
@@ -300,6 +307,7 @@ export const scenes = [
         label: "Chôn cùng ký ức gia đình",
         description: "Gửi phần lương cuối vào đất như một lời tiễn biệt.",
         effects: { nhanTinh: 2, daTam: -1 },
+        memory: ["remembered_hunger", "protected_dignity"],
         resultText:
           "Đất khô phủ lên những hạt gạo. Cậu đứng lặng, như vừa chôn một bữa cơm chưa kịp thành hình.",
         nextSceneId: "famine-home",
@@ -331,6 +339,7 @@ export const scenes = [
         label: "Rời nhà tìm đường sống",
         description: "Khép cửa sau lưng và đi về phía chưa biết.",
         effects: { daTam: 2 },
+        memory: ["chose_survival"],
         resultText:
           "Cậu quay lưng khỏi mái nhà lạnh. Mỗi bước chân như xé một sợi rễ khỏi đất.",
         nextSceneId: "huangjue-temple",
@@ -340,6 +349,7 @@ export const scenes = [
         label: "Ở lại thêm một đêm",
         description: "Cho ký ức gia đình một đêm cuối cùng.",
         effects: { nhanTinh: 2 },
+        memory: ["showed_mercy", "remembered_hunger"],
         resultText:
           "Đêm ấy dài hơn mọi đêm trước. Cậu ngồi bên bếp tắt, giữ lấy phần người chưa chịu rời đi.",
         nextSceneId: "huangjue-temple",
@@ -349,6 +359,7 @@ export const scenes = [
         label: "Ghi nhớ món nợ với thời loạn",
         description: "Để mất mát hóa thành một khoản nợ phải đòi.",
         effects: { daTam: 2, nhanTinh: -1 },
+        memory: ["chose_power", "remembered_hunger"],
         resultText:
           "Cậu nhìn căn nhà lần cuối. Trong lòng, nỗi đau đông lại thành một mảnh sắt lạnh.",
         nextSceneId: "huangjue-temple",
@@ -381,6 +392,7 @@ export const scenes = [
         label: "Cúi đầu nhẫn nhịn",
         description: "Nhận lấy kỷ luật cửa chùa để qua ngày khốn khó.",
         effects: { nhanTinh: 2, danTam: 1 },
+        memory: ["accepted_humiliation", "chose_survival"],
         resultText:
           "Cậu cúi đầu trước tượng Phật và trước bát cháo loãng. Nhẫn nhịn cũng là một cách giữ mạng.",
         nextSceneId: "wandering-monk",
@@ -390,6 +402,7 @@ export const scenes = [
         label: "Giữ trong lòng nỗi uất",
         description: "Lặng im bên ngoài, không để lửa trong ngực tắt đi.",
         effects: { daTam: 2 },
+        memory: ["chose_power"],
         resultText:
           "Tiếng kinh trôi qua tai, nhưng nỗi uất không tan. Cậu biết mình chưa sinh ra chỉ để quét sân chùa.",
         nextSceneId: "wandering-monk",
@@ -399,6 +412,7 @@ export const scenes = [
         label: "Tin rằng số mệnh chưa dừng ở đây",
         description: "Nhìn cửa chùa như một quãng nghỉ, không phải điểm cuối.",
         effects: { daTam: 1, quanUy: 1 },
+        memory: ["chose_power", "chose_survival"],
         resultText:
           "Trong tiếng chuông chiều, cậu thấy con đường đời vẫn còn kéo dài sau cánh cổng.",
         nextSceneId: "wandering-monk",
@@ -431,6 +445,7 @@ export const scenes = [
         label: "Cầu xin để sống qua ngày",
         description: "Hạ mình trước từng cánh cửa để giữ hơi thở.",
         effects: { nhanTinh: 2 },
+        memory: ["accepted_humiliation", "chose_survival"],
         resultText:
           "Ông nhận từng mẩu bánh cứng bằng hai tay. Sống sót đôi khi bắt đầu từ việc nuốt xuống tự ái.",
         nextSceneId: "execution-ground",
@@ -440,6 +455,7 @@ export const scenes = [
         label: "Quan sát cách kẻ mạnh cai trị",
         description: "Học trật tự tàn nhẫn của thời loạn bằng mắt lạnh.",
         effects: { daTam: 2, quanUy: 2 },
+        memory: ["chose_power", "used_fear"],
         resultText:
           "Ông nhìn cách lính giữ cổng, cách người giàu nói nhỏ với quan sai. Quyền lực có dáng đi riêng của nó.",
         nextSceneId: "execution-ground",
@@ -449,6 +465,7 @@ export const scenes = [
         label: "Giúp người yếu hơn mình",
         description: "Chia phần ít ỏi cho kẻ còn khốn cùng hơn.",
         effects: { danTam: 2, nhanTinh: 1 },
+        memory: ["protected_weak", "shared_food"],
         resultText:
           "Một nửa mẩu bánh rời khỏi tay ông. Bụng vẫn rỗng, nhưng người bên đường có thêm một buổi để sống.",
         nextSceneId: "execution-ground",
@@ -481,6 +498,7 @@ export const scenes = [
         label: "Im lặng để giữ mạng",
         description: "Rút lui trước quyền lực đang nổi giận.",
         effects: { quanUy: 1, nhanTinh: -1 },
+        memory: ["chose_survival", "accepted_humiliation"],
         resultText:
           "Ông khép môi, nghe tiếng kinh tắt trong cổ họng. Sống sót cũng để lại vị đắng.",
         nextSceneId: "ma-rescue",
@@ -490,6 +508,7 @@ export const scenes = [
         label: "Tụng kinh bất chấp nguy hiểm",
         description: "Trao cho người chết một chút phẩm giá cuối cùng.",
         effects: { nhanTinh: 2, danTam: 2 },
+        memory: ["defied_authority", "showed_mercy"],
         resultText:
           "Tiếng kinh thấp nhưng không vỡ. Một vài người trong đám đông ngẩng lên, như vừa nhớ mình vẫn là người.",
         nextSceneId: "ma-rescue",
@@ -499,6 +518,7 @@ export const scenes = [
         label: "Đứng chắn trước đao lính",
         description: "Không lùi trước tiếng quát của kẻ cầm quyền.",
         effects: { nghiaKhi: 2, daTam: 1 },
+        memory: ["protected_weak", "defied_authority"],
         resultText:
           "Ông đứng yên trước mũi giáo. Sự gan lì ấy khiến cả lính canh cũng phải chậm lại một nhịp.",
         nextSceneId: "ma-rescue",
@@ -531,6 +551,7 @@ export const scenes = [
         label: "Cảm tạ rồi rời đi",
         description: "Nhận ân tình nhưng không kéo nàng vào hiểm họa.",
         effects: { nhanTinh: 2 },
+        memory: ["showed_mercy", "protected_dignity"],
         resultText:
           "Ông cúi đầu cảm tạ. Có những ân tình càng lớn càng khiến người ta muốn tránh liên lụy.",
         nextSceneId: "rebel-camp-meal",
@@ -540,6 +561,7 @@ export const scenes = [
         label: "Đi theo nàng đến nghĩa quân",
         description: "Chấp nhận bước qua cánh cửa của thời loạn.",
         effects: { daTam: 2 },
+        memory: ["chose_power", "chose_survival"],
         resultText:
           "Ông nhìn về hướng doanh trại. Nếu sống mãi bằng trốn chạy, đời này sẽ chỉ còn những ngõ hẹp.",
         nextSceneId: "rebel-camp-meal",
@@ -549,6 +571,7 @@ export const scenes = [
         label: "Hỏi vì sao nàng cứu mình",
         description: "Muốn hiểu lòng người trước khi nhận con đường mới.",
         effects: { nhanTinh: 1, nghiaKhi: 1 },
+        memory: ["showed_mercy", "took_responsibility"],
         resultText:
           "Mã Tú Anh đáp rằng người biết cầu siêu cho kẻ lạ chưa thể là kẻ đáng bỏ mặc. Câu ấy ở lại rất lâu.",
         nextSceneId: "rebel-camp-meal",
@@ -581,6 +604,7 @@ export const scenes = [
         label: "Nhập ngũ chỉ để có cơm ăn",
         description: "Bắt đầu từ nhu cầu nhỏ nhất và thật nhất.",
         effects: { quanUy: 1, nhanTinh: 1 },
+        memory: ["chose_survival", "remembered_hunger"],
         resultText:
           "Ông nhận bát cơm như nhận một mạng sống mới. Có khi chí lớn bắt đầu bằng một miếng ăn không bị xua đuổi.",
         nextSceneId: "warm-bread-night",
@@ -590,6 +614,7 @@ export const scenes = [
         label: "Hỏi nghĩa quân chiến đấu vì ai",
         description: "Tìm lý do phía sau lá cờ và tiếng trống.",
         effects: { danTam: 2, daTam: 1 },
+        memory: ["protected_weak", "chose_power"],
         resultText:
           "Câu hỏi khiến Quách Tử Hưng nhìn ông lâu hơn. Người chỉ cần cơm sẽ im lặng, người muốn thiên hạ sẽ hỏi vì ai mà đánh.",
         nextSceneId: "warm-bread-night",
@@ -599,6 +624,7 @@ export const scenes = [
         label: "Xin bắt đầu từ việc thấp nhất",
         description: "Chọn kỷ luật trước khi đòi vị trí.",
         effects: { nghiaKhi: 1, quanUy: 2 },
+        memory: ["chose_discipline", "took_responsibility"],
         resultText:
           "Ông nhận việc bẩn việc nặng không than. Doanh trại nhanh chóng học được rằng kẻ mới này biết cúi đầu đúng lúc.",
         nextSceneId: "warm-bread-night",
@@ -631,6 +657,7 @@ export const scenes = [
         label: "Nhận bánh và im lặng",
         description: "Để lòng biết ơn nằm trong ánh mắt thay lời nói.",
         effects: { nhanTinh: 2 },
+        memory: ["showed_mercy"],
         resultText:
           "Ông nhận bánh bằng hai tay. Hơi nóng đi qua lòng bàn tay, làm ký ức giá lạnh lùi lại một chút.",
         nextSceneId: "tavern-reunion",
@@ -640,6 +667,7 @@ export const scenes = [
         label: "Hứa sau này sẽ báo đáp",
         description: "Biến ân tình thành món nợ phải trả bằng cả đời.",
         effects: { nghiaKhi: 1, daTam: 1 },
+        memory: ["protected_brothers", "took_responsibility"],
         resultText:
           "Lời hứa nói rất khẽ, nhưng Mã Tú Anh nghe rõ. Có những món nợ không ghi sổ vẫn nặng như núi.",
         nextSceneId: "tavern-reunion",
@@ -649,6 +677,7 @@ export const scenes = [
         label: "Chia bánh cho người khác",
         description: "Đem hơi ấm hiếm hoi san cho kẻ cũng đang lạnh.",
         effects: { danTam: 2, nhanTinh: 1 },
+        memory: ["shared_food", "protected_weak"],
         resultText:
           "Chiếc bánh vơi đi, nhưng chuồng ngựa bỗng bớt lạnh. Người từng đói hiểu rõ một miếng chia đôi quý đến đâu.",
         nextSceneId: "tavern-reunion",
@@ -681,6 +710,7 @@ export const scenes = [
         label: "Ép họ gọi mình là đại ca",
         description: "Giữ ngôi huynh trưởng bằng khí thế cũ.",
         effects: { nghiaKhi: 1, daTam: 1 },
+        memory: ["protected_brothers", "chose_power"],
         resultText:
           "Tiếng đại ca bật ra giữa tiếng cười. Dù đời đổi thay, ông vẫn muốn người cũ nhớ vị trí của mình.",
         nextSceneId: "leading-horses",
@@ -690,6 +720,7 @@ export const scenes = [
         label: "Cười xòa giữ hòa khí",
         description: "Đặt tình cũ cao hơn danh phận trước mắt.",
         effects: { nhanTinh: 2 },
+        memory: ["protected_dignity", "showed_mercy"],
         resultText:
           "Ông nâng chén và cười như chưa từng chịu đói. Một khoảnh khắc ngắn, đời cơ hàn trở thành chuyện có thể kể lại.",
         nextSceneId: "leading-horses",
@@ -699,6 +730,7 @@ export const scenes = [
         label: "Nhắc lại lời thề năm xưa",
         description: "Buộc huynh đệ nhìn về cùng một hướng.",
         effects: { nghiaKhi: 2, danTam: 1 },
+        memory: ["protected_brothers", "remembered_hunger"],
         resultText:
           "Lời thề cũ khiến bàn rượu lặng đi. Không ai còn là đứa trẻ trên đồng, nhưng món nợ với người nghèo vẫn còn đó.",
         nextSceneId: "leading-horses",
@@ -731,6 +763,7 @@ export const scenes = [
         label: "Giữ lễ trước mặt quân doanh",
         description: "Đặt quân kỷ lên trên cảm xúc riêng.",
         effects: { quanUy: 2, nghiaKhi: 1 },
+        memory: ["chose_discipline", "took_responsibility"],
         resultText:
           "Ông cúi đầu đúng phép, không thừa một lời. Tướng chưa cần chức cao, trước hết phải khiến người khác thấy mình hiểu luật.",
         nextSceneId: "first-battle",
@@ -740,6 +773,7 @@ export const scenes = [
         label: "Tỏ ra bất mãn vì chức thấp",
         description: "Để vết nhục cũ trồi lên trước mắt mọi người.",
         effects: { daTam: 2, quanUy: -1 },
+        memory: ["chose_power", "accepted_humiliation"],
         resultText:
           "Ánh mắt bất mãn thoáng qua quá rõ. Người trong doanh trại nhìn thấy tham vọng, nhưng cũng thấy nó chưa được buộc lại.",
         nextSceneId: "first-battle",
@@ -749,6 +783,7 @@ export const scenes = [
         label: "Nhắc huynh đệ đừng quên gốc",
         description: "Giữ lễ mà vẫn giữ tình cũ.",
         effects: { nghiaKhi: 1, nhanTinh: 1 },
+        memory: ["protected_brothers", "protected_dignity"],
         resultText:
           "Ông dắt ngựa và nói rất khẽ. Huynh đệ có thể hơn kém chức phận, nhưng không được quên đường đã đi qua.",
         nextSceneId: "first-battle",
@@ -781,6 +816,7 @@ export const scenes = [
         label: "Tuân lệnh đứng yên",
         description: "Chọn quân kỷ lạnh lùng trước tiếng gọi hỗn loạn.",
         effects: { quanUy: 2, danTam: -1 },
+        memory: ["chose_discipline"],
         resultText:
           "Hàng ngũ giữ nguyên, chắc như cọc đóng xuống đất. Nhưng phía xa, vài ánh mắt tắt đi trong thất vọng.",
         nextSceneId: "prison-cell",
@@ -790,6 +826,7 @@ export const scenes = [
         label: "Xông lên cứu quân bạn",
         description: "Đặt lòng nghĩa khí vào ngay giữa mũi tên.",
         effects: { danTam: 2, nghiaKhi: 2, quanUy: 1 },
+        memory: ["protected_weak", "led_by_example"],
         resultText:
           "Ông lao lên trước, kéo theo những người còn do dự. Khi bụi lắng xuống, binh lính nhớ ai đã đến với họ.",
         nextSceneId: "prison-cell",
@@ -799,6 +836,7 @@ export const scenes = [
         label: "Kêu gọi binh lính cùng xông lên",
         description: "Biến một hành động trái lệnh thành ý chí tập thể.",
         effects: { daTam: 1, quanUy: 2, nghiaKhi: 1 },
+        memory: ["led_by_example", "defied_authority"],
         resultText:
           "Tiếng gọi của ông cắt qua tiếng trống. Người này nhìn người kia, rồi cả hàng quân chuyển động như vừa tìm thấy đầu mũi giáo.",
         nextSceneId: "prison-cell",
@@ -830,6 +868,7 @@ export const scenes = [
         label: "Nhận tội nhưng không hối hận",
         description: "Để người khác thấy mình dám chịu điều đã làm.",
         effects: { quanUy: 2, daTam: 1 },
+        memory: ["took_responsibility", "chose_power"],
         resultText:
           "Ông nhận tội bằng giọng bình thản. Cửa ngục không rộng, nhưng khí thế trong đó không hề nhỏ.",
         nextSceneId: "new-name-ceremony",
@@ -839,6 +878,7 @@ export const scenes = [
         label: "Xin tha mạng",
         description: "Bám lấy sự sống trước khi mọi thứ khép lại.",
         effects: { nhanTinh: 2, quanUy: -1 },
+        memory: ["chose_survival", "accepted_humiliation"],
         resultText:
           "Lời xin tha vang lên trong căn ngục thấp. Nó giữ lại phần người sợ chết, nhưng làm ánh mắt lính canh đổi khác.",
         nextSceneId: "new-name-ceremony",
@@ -848,6 +888,7 @@ export const scenes = [
         label: "Im lặng chờ phán quyết",
         description: "Không giải thích, không cầu cạnh, không run rẩy.",
         effects: { quanUy: 2, nghiaKhi: 1 },
+        memory: ["chose_discipline", "took_responsibility"],
         resultText:
           "Ông ngồi im cho đến sáng. Đôi khi im lặng khiến người bên ngoài phải tự hỏi nhiều hơn mọi lời biện hộ.",
         nextSceneId: "new-name-ceremony",
@@ -880,6 +921,7 @@ export const scenes = [
         label: "Quỳ nhận tên mới",
         description: "Nhận quân lệnh như nhận một đời khác.",
         effects: { quanUy: 2, nghiaKhi: 1 },
+        memory: ["chose_discipline", "took_responsibility"],
         resultText:
           "Ông quỳ xuống, hai tay nhận lấy tấm giáp. Khi đứng dậy, ánh mắt quân lính đã khác trước.",
         nextSceneId: "zhu-yuanzhang-dawn",
@@ -889,6 +931,7 @@ export const scenes = [
         label: "Thề không quên xuất thân nghèo đói",
         description: "Buộc cái tên mới phải mang theo dân nghèo phía sau.",
         effects: { danTam: 2, nhanTinh: 1 },
+        memory: ["remembered_hunger", "protected_weak"],
         resultText:
           "Ông gọi lại những ngày bếp lạnh trong lòng. Tên mới có thể sáng, nhưng gốc cũ vẫn phải còn.",
         nextSceneId: "zhu-yuanzhang-dawn",
@@ -898,6 +941,7 @@ export const scenes = [
         label: "Nhìn về thiên hạ phía trước",
         description: "Xem quân chức đầu tiên như bậc thềm mở đường lớn.",
         effects: { daTam: 2, quanUy: 1 },
+        memory: ["chose_power"],
         resultText:
           "Ông nhìn qua cờ trận ra phía trời xa. Một chức nhỏ trong doanh trại bỗng giống điểm bắt đầu của điều lớn hơn.",
         nextSceneId: "zhu-yuanzhang-dawn",
@@ -930,6 +974,7 @@ export const scenes = [
         label: "Bắt đầu con đường mới",
         description: "Đi tiếp với cả lòng người, quân kỷ và tham vọng.",
         effects: { danTam: 1, nghiaKhi: 1, quanUy: 1 },
+        memory: ["took_responsibility", "led_by_example"],
         resultText:
           "Ông bước vào ánh sớm, không quên phía sau nhưng cũng không còn thuộc về nó.",
         nextSceneId: null,
@@ -940,6 +985,7 @@ export const scenes = [
         label: "Ghi nhớ 13 hạt gạo",
         description: "Giữ ký ức nghèo đói làm gốc của mọi lựa chọn.",
         effects: { nhanTinh: 2, danTam: 1 },
+        memory: ["remembered_hunger", "showed_mercy"],
         resultText:
           "Trong túi áo, ký ức về mười ba hạt gạo nặng hơn cả chiến giáp.",
         nextSceneId: null,
@@ -950,6 +996,7 @@ export const scenes = [
         label: "Nắm chặt chiến giáp",
         description: "Chọn sức mạnh để không bao giờ bị dồn ép lần nữa.",
         effects: { daTam: 2, quanUy: 1 },
+        memory: ["chose_power", "used_fear"],
         resultText:
           "Ngón tay ông siết lên mép giáp lạnh. Từ giây phút ấy, thiên hạ không còn là chuyện của người khác.",
         nextSceneId: null,
